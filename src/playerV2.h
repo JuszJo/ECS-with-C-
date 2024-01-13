@@ -7,6 +7,14 @@
 
 class PlayerV2: public EntityV2 {
     public:
+        glm::vec3 speed = glm::vec3(0.0f, 0.0f, 0.0f);
+
+        float acceleration = 5.0f;
+
+        enum STATE {UP, DOWN, LEFT, RIGHT, IDLE};
+
+        STATE currentState = IDLE;
+
         PlayerV2() {};
 
         PlayerV2(float position_x, float position_y, float size_width, float size_height) {
@@ -39,10 +47,29 @@ class PlayerV2: public EntityV2 {
         }
 
         void listen(KeyInput::Keys* keys) override {
-            if(keys -> w) printf("w\n");
-            if(keys -> s) printf("s\n");
-            if(keys -> a) printf("a\n");
-            if(keys -> d) printf("d\n");
+            if(keys -> w) {
+                // printf("w\n");
+                // currentState = UP;
+            }
+            if(keys -> s) {
+                // printf("s\n");
+                // currentState = UP;
+            }
+            if(keys -> a) {
+                // printf("a\n");
+                currentState = LEFT;
+            }
+            if(keys -> d) {
+                // printf("d\n");
+                currentState = RIGHT;
+            }
+            if(!keys -> w && !keys -> s && !keys -> a && !keys -> d) {
+                currentState = IDLE;
+            }
+        }
+
+        void move() {
+
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {
