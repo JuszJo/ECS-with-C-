@@ -11,6 +11,8 @@
 
 #include "../libs/shader.h"
 
+#include "keyinput.h"
+
 class EntityV2 {
     public:
         bool active = false;
@@ -22,6 +24,8 @@ class EntityV2 {
         float x, y, width, height;
 
         glm::mat4 model = glm::mat4(1.0f);
+
+        virtual void listen(KeyInput::Keys* keys) {};
 
         virtual void update() {};
 

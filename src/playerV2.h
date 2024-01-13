@@ -2,6 +2,8 @@
 #define PLAYERV2_H
 
 #include "entityV2.h"
+#include "keyinput.h"
+#include "systems/input_system.h"
 
 class PlayerV2: public EntityV2 {
     public:
@@ -34,6 +36,13 @@ class PlayerV2: public EntityV2 {
             // handleVertexArrayObject(1, 2, stride, 3);
 
             cleanupBuffers();
+        }
+
+        void listen(KeyInput::Keys* keys) override {
+            if(keys -> w) printf("w\n");
+            if(keys -> s) printf("s\n");
+            if(keys -> a) printf("a\n");
+            if(keys -> d) printf("d\n");
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {

@@ -28,6 +28,8 @@ bool settingShowCollisionbox = false;
 bool gameStart = false;
 
 #include "src/systems/render_system.h"
+#include "src/systems/input_system.h"
+
 #include "src/entityManager.h"
 
 #include "src/entityV2.h"
@@ -65,6 +67,7 @@ int main() {
     EntityManager entityManager;
 
     RenderSystem renderSystem;
+    InputSystem InputSystem;
 
     PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     player.active = true;
@@ -75,6 +78,12 @@ int main() {
     EntityV2** renderEntities = {&omo};
 
     int renderSize = sizeof(renderEntities) / sizeof(renderEntities[0]);
+
+    EntityV2* inputEntity = entityManager.getEntity((char*)"player");
+
+    EntityV2** inputEntities = {&inputEntity};
+
+    int inputSize = sizeof(inputEntities) / sizeof(inputEntities[0]);
 
     // EntityV2* arr[1];
 
@@ -103,6 +112,9 @@ int main() {
 
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
+
+        InputSystem.processInput(window);
+        InputSystem.listen(inputEntities, inputSize);
 
         testShader.use();
         renderSystem.render(renderEntities, renderSize, &testShader, projection, view);
