@@ -68,11 +68,46 @@ class PlayerV2: public EntityV2 {
             }
         }
 
-        void move() {
+        void stateChecker() {
+            switch (currentState) {
+                case LEFT:
+                    speed.x = -acceleration;
+                    
+                    break;
 
+                case RIGHT:
+                    speed.x = acceleration;
+
+                    break;
+
+                case IDLE:
+                    speed.x = 0.0f;
+
+                    break;
+                
+                default:
+                    break;
+            }
         }
 
-        void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {
+        void applySpeed() {
+            x += speed.x;
+            y += speed.y;
+        }
+
+        void applyPosition() {
+            model = glm::mat4(1.0f);
+
+            model = glm::translate(model, glm::vec3(x, y, 0.0f));
+        }
+
+        void update() override {
+            stateChecker();
+            applySpeed();
+            applyPosition();
+        }
+
+        void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));

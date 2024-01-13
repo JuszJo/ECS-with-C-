@@ -28,6 +28,7 @@ bool settingShowCollisionbox = false;
 bool gameStart = false;
 
 #include "src/systems/render_system.h"
+#include "src/systems/update_system.h"
 #include "src/systems/input_system.h"
 
 #include "src/entityManager.h"
@@ -66,6 +67,7 @@ int main() {
 
     EntityManager entityManager;
 
+    UpdateSystem updateSystem;
     RenderSystem renderSystem;
     InputSystem InputSystem;
 
@@ -76,14 +78,20 @@ int main() {
     EntityV2* omo = entityManager.getEntity((char*)"player");
 
     EntityV2** renderEntities = {&omo};
-
     int renderSize = sizeof(renderEntities) / sizeof(renderEntities[0]);
 
     EntityV2* inputEntity = entityManager.getEntity((char*)"player");
-
     EntityV2** inputEntities = {&inputEntity};
-
     int inputSize = sizeof(inputEntities) / sizeof(inputEntities[0]);
+
+    EntityV2** updateEntities = {&omo};
+    int updateSize = sizeof(updateEntities) / sizeof(updateEntities[0]);
+
+
+
+
+
+
 
     // EntityV2* arr[1];
 
@@ -117,6 +125,7 @@ int main() {
         InputSystem.listen(inputEntities, inputSize);
 
         testShader.use();
+        updateSystem.update(updateEntities, updateSize);
         renderSystem.render(renderEntities, renderSize, &testShader, projection, view);
         
         glfwSwapBuffers(window);
