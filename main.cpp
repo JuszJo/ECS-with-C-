@@ -9,10 +9,6 @@
 #include "libs/shader.h"
 #include "libs/stb_image.h"
 
-// #include "src/square.h"
-// #include "src/button.h"
-// #include "src/menu.h"
-
 struct Camera {
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
     glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -27,11 +23,12 @@ bool settingShowCollisionbox = false;
 
 bool gameStart = false;
 
+#include "src/game_manager.h"
+#include "src/entity_manager.h"
+
 #include "src/systems/render_system.h"
 #include "src/systems/update_system.h"
 #include "src/systems/input_system.h"
-
-#include "src/entityManager.h"
 
 #include "src/entityV2.h"
 #include "src/playerV2.h"
@@ -66,6 +63,9 @@ int main() {
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
 
     EntityManager entityManager;
+    GameManager gameManager;
+
+    gameManager.entityManager = &entityManager;
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
@@ -86,20 +86,6 @@ int main() {
 
     EntityV2** updateEntities = {&omo};
     int updateSize = sizeof(updateEntities) / sizeof(updateEntities[0]);
-
-
-
-
-
-
-
-    // EntityV2* arr[1];
-
-    // arr[0] = &player;
-
-    // int size = sizeof(arr) / sizeof(arr[0]);
-
-    // std::cout << entityManager.getEntity((char*)"player") -> name << std::endl;
 
     glm::mat4 projection = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
