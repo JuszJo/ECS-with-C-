@@ -48,7 +48,7 @@ int currentIndex = 0;
 
 void addEntity(EntityV2* entity) {
     if(currentIndex == size) {
-        printf("UHMM\n");
+        // printf("UHMM\n");
 
         int newSize = size + 1;
 
@@ -136,6 +136,14 @@ int main() {
             newP -> active = true;
 
             addEntity(newP); */
+            Bullet* newBullet = new Bullet(0.0f, 0.0f, 20.0f, 20.0f);
+
+            newBullet -> x = 300.0f;
+            newBullet -> y = 300.0f;
+
+            newBullet -> active = true;
+
+            addEntity(newBullet);
         }
 
         InputSystem.processInput(window);

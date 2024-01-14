@@ -56,9 +56,9 @@ class Bullet: public EntityV2 {
         }
 
         void update() override {
-            // stateChecker();
-            // applySpeed();
-            // applyPosition();
+            speed.x = acceleration;
+            applySpeed();
+            applyPosition();
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
