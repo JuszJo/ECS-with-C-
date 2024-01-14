@@ -41,10 +41,28 @@ void test(EntityV2* pointer) {
     std::cout << pointer->active << std::endl;
 }
 
-EntityV2* entityList[1];
+int size = 1;
+
+EntityV2** entityList = (EntityV2**)malloc(size * sizeof(EntityV2*));
 int currentIndex = 0;
 
 void addEntity(EntityV2* entity) {
+    if(currentIndex == size) {
+        printf("UHMM\n");
+
+        int newSize = size + 1;
+
+        entityList = (EntityV2**)realloc(entityList, newSize * sizeof(EntityV2*));
+
+        // Check if realloc succeeded
+        if (entityList == NULL) {
+            printf("Error: Memory allocation failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        size = newSize;
+    }
+
     entityList[currentIndex] = entity;
 
     ++currentIndex;
@@ -81,7 +99,6 @@ int main() {
     PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     player.active = true;
     addEntity(&player);
-    int renderSize = sizeof(entityList) / sizeof(entityList[0]);
 
     // PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     // player.active = true;
@@ -113,12 +130,20 @@ int main() {
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
 
-        // InputSystem.processInput(window);
-        // InputSystem.listen(inputEntities, inputSize);
+        if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+            /* PlayerV2* newP = new PlayerV2(50.0f * (float)size, 0.0f, 100.0f, 100.0f);
+
+            newP -> active = true;
+
+            addEntity(newP); */
+        }
+
+        InputSystem.processInput(window);
+        InputSystem.listen(entityList, size);
 
         testShader.use();
-        // updateSystem.update(updateEntities, updateSize);
-        renderSystem.render(entityList, renderSize, &testShader, projection, view);
+        updateSystem.update(entityList, size);
+        renderSystem.render(entityList, size, &testShader, projection, view);
         
         glfwSwapBuffers(window);
     }

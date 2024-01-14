@@ -9,7 +9,7 @@ class UpdateSystem {
 
         UpdateSystem() {}
 
-        void update(EntityV2** entityPointer, int arraySize) {
+        void update(EntityV2* entityPointer[], int arraySize) {
             for(int i = 0; i < arraySize; ++i) {
                 if(entityPointer[i] -> active) {
                     entityPointer[i] -> update();

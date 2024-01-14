@@ -14,7 +14,7 @@ class InputSystem {
             keyInput.processInput(window);
         }
 
-        void listen(EntityV2** entityPointer, int arraySize) {
+        void listen(EntityV2* entityPointer[], int arraySize) {
             for(int i = 0; i < arraySize; ++i) {
                 if(entityPointer[i] -> active) {
                     entityPointer[i] -> listen(&keyInput.key);
