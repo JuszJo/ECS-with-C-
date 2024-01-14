@@ -5,7 +5,7 @@
 
 class EntityManager {
     public:
-        EntityV2* entityList[1];
+        EntityV2* entityList[2];
         int currentIndex = 0;
 
         EntityManager() {}

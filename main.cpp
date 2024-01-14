@@ -32,12 +32,22 @@ bool gameStart = false;
 
 #include "src/entityV2.h"
 #include "src/playerV2.h"
+#include "src/bullet.h"
 
 Camera camera;
 
 
 void test(EntityV2* pointer) {
     std::cout << pointer->active << std::endl;
+}
+
+EntityV2* entityList[1];
+int currentIndex = 0;
+
+void addEntity(EntityV2* entity) {
+    entityList[currentIndex] = entity;
+
+    ++currentIndex;
 }
 
 int main() {
@@ -63,9 +73,6 @@ int main() {
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
 
     EntityManager entityManager;
-    GameManager gameManager;
-
-    gameManager.entityManager = &entityManager;
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
@@ -73,19 +80,18 @@ int main() {
 
     PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     player.active = true;
-    entityManager.addEntity(&player);
+    addEntity(&player);
+    int renderSize = sizeof(entityList) / sizeof(entityList[0]);
 
-    EntityV2* omo = entityManager.getEntity((char*)"player");
+    // PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
+    // player.active = true;
+    // entityManager.addEntity(&player);
 
-    EntityV2** renderEntities = {&omo};
-    int renderSize = sizeof(renderEntities) / sizeof(renderEntities[0]);
+    // EntityV2* omo = entityManager.getEntity((char*)"player");
+    // EntityV2* omo2 = entityManager.getEntity((char*)"bullet");
 
-    EntityV2* inputEntity = entityManager.getEntity((char*)"player");
-    EntityV2** inputEntities = {&inputEntity};
-    int inputSize = sizeof(inputEntities) / sizeof(inputEntities[0]);
-
-    EntityV2** updateEntities = {&omo};
-    int updateSize = sizeof(updateEntities) / sizeof(updateEntities[0]);
+    // EntityV2* renderEntities[1] = {omo};
+    // int renderSize = sizeof(renderEntities) / sizeof(renderEntities[0]);
 
     glm::mat4 projection = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
@@ -107,12 +113,12 @@ int main() {
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
 
-        InputSystem.processInput(window);
-        InputSystem.listen(inputEntities, inputSize);
+        // InputSystem.processInput(window);
+        // InputSystem.listen(inputEntities, inputSize);
 
         testShader.use();
-        updateSystem.update(updateEntities, updateSize);
-        renderSystem.render(renderEntities, renderSize, &testShader, projection, view);
+        // updateSystem.update(updateEntities, updateSize);
+        renderSystem.render(entityList, renderSize, &testShader, projection, view);
         
         glfwSwapBuffers(window);
     }

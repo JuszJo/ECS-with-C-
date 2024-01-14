@@ -4,6 +4,7 @@
 #include "entityV2.h"
 #include "keyinput.h"
 #include "systems/input_system.h"
+#include "game_manager.h"
 
 class PlayerV2: public EntityV2 {
     public:
@@ -62,6 +63,9 @@ class PlayerV2: public EntityV2 {
             if(keys -> d) {
                 // printf("d\n");
                 currentState = RIGHT;
+            }
+            if(keys -> space) {
+                // GameManager::createBullet();
             }
             if(!keys -> w && !keys -> s && !keys -> a && !keys -> d) {
                 currentState = IDLE;

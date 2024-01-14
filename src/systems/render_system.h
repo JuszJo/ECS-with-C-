@@ -9,7 +9,8 @@ class RenderSystem {
 
         RenderSystem() {}
 
-        void render(EntityV2** entityPointer, int arraySize, Shader* shader, glm::mat4 projection, glm::mat4 view) {
+        void render(EntityV2* entityPointer[], int arraySize, Shader* shader, glm::mat4 projection, glm::mat4 view) {
+            std::cout << entityPointer[0] -> active << std::endl;
             for(int i = 0; i < arraySize; ++i) {
                 if(entityPointer[i] -> active) {
                     entityPointer[i] -> render(shader, projection, view);
