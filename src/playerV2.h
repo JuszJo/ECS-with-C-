@@ -67,7 +67,7 @@ class PlayerV2: public EntityV2 {
                 currentState = RIGHT;
             }
             if(keys -> space) {
-                // GameManager::createBullet();
+
             }
             if(!keys -> w && !keys -> s && !keys -> a && !keys -> d) {
                 currentState = IDLE;
