@@ -95,13 +95,6 @@ void removeNotActive() {
     int newSize = size - notActiveSize;
 
     if(newSize != size) {
-        // delete entityList[entity_index];
-    
-        // for(int i = entity_index; i < currentIndex - 1; ++i) {
-        //     entityList[i] = entityList[i + 1];
-        // }
-
-        // --currentIndex;
         for(int i = 0; i < size; ++i) {
             if(entityList[i] -> active == false) {
                 delete entityList[i];
@@ -127,6 +120,31 @@ void removeNotActive() {
     }
 }
 
+bool didCollide(EntityV2 entity1, EntityV2 entity2) {
+    if(
+        entity1.x + entity1.width > entity2.x &&
+        entity1.x < entity2.x + entity2.width &&
+        entity1.y + entity1.height > entity2.y &&
+        entity1.y < entity2.y + entity2.height
+    ) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void testCollision(EntityV2* entity) {
+    for(int i = 0; i < size; ++i) {
+        EntityV2* currentEntity = entityList[i];
+        if(currentEntity != entity) {
+            if(didCollide(*entity, *currentEntity)) {
+                std::cout << "collided with" << currentEntity -> name << std::endl;
+            }
+        }
+    }
+}
+
 #include "src/game_manager.h"
 #include "src/entity_manager.h"
 
@@ -135,6 +153,7 @@ void removeNotActive() {
 #include "src/systems/input_system.h"
 
 #include "src/playerV2.h"
+#include "src/enemy.h"
 #include "src/bullet.h"
 
 Camera camera;
@@ -175,6 +194,10 @@ int main() {
     PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
     player.active = true;
     addEntity(&player);
+
+    Enemy enemy(600.0f, 300.0f, 100.0f, 100.0f, currentIndex);
+    enemy.active = true;
+    addEntity(&enemy);
 
     // PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     // player.active = true;
@@ -237,6 +260,12 @@ int main() {
         testShader.use();
         updateSystem.update(entityList, size);
         renderSystem.render(entityList, size, &testShader, projection, view);
+
+        /* if(activeBullets) {
+            bool result = entityCollision(*entityList[2], enemy);
+
+            std::cout << "did collide?: " << result << std::endl;
+        } */
 
         removeNotActive();
         

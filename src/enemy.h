@@ -1,28 +1,27 @@
-#ifndef BULLET_H
-#define BULLET_H
+#ifndef ENEMY_H
+#define ENEMY_H
 
 #include "entityV2.h"
+#include "keyinput.h"
+#include "systems/input_system.h"
+#include "game_manager.h"
 
-class Bullet: public EntityV2 {
+class Enemy: public EntityV2 {
     public:
         glm::vec3 speed = glm::vec3(0.0f, 0.0f, 0.0f);
 
         float acceleration = 5.0f;
 
-        // enum STATE {UP, DOWN, LEFT, RIGHT, IDLE};
+        Enemy() {};
 
-        // STATE currentState = IDLE;
-
-        Bullet() {};
-
-        Bullet(float position_x, float position_y, float size_width, float size_height, int entity_index) {
+        Enemy(float position_x, float position_y, float size_width, float size_height, int entity_index) {
             x = position_x;
             y = position_y;
             width = size_width;
             height = size_height;
             index = entity_index;
 
-            name = (char*)"bullet";
+            name = (char*)"enemy";
 
             stride = 3;
 
@@ -56,29 +55,10 @@ class Bullet: public EntityV2 {
             model = glm::translate(model, glm::vec3(x, y, 0.0f));
         }
 
-        // void testCollision() {
-        //     for(int i = 0; i < size; ++i) {
-        //         EntityV2* currentEntity = entityList[i];
-        //         if(currentEntity != this) {
-        //             if(didCollide(*this, *currentEntity)) {
-        //                 std::cout << "collided with" << currentEntity -> name << std::endl;
-        //             }
-        //         }
-        //     }
-        // }
-
         void update() override {
-            speed.x = acceleration;
-            applySpeed();
-            applyPosition();
-
-            if(x + width > 800.0f) {
-                active = false;
-                --activeBullets;
-                // removeEntity(index);
-            }
-
-            testCollision(this);
+            // stateChecker();
+            // applySpeed();
+            // applyPosition();
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
