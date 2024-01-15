@@ -17,6 +17,8 @@ class EntityV2 {
     public:
         bool active = false;
 
+        int index;
+
         char* name;
         
         unsigned int VAO, VBO, EBO, TBO;

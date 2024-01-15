@@ -9,6 +9,8 @@
 #include "libs/shader.h"
 #include "libs/stb_image.h"
 
+#include "src/entityV2.h"
+
 struct Camera {
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
     glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -23,28 +25,15 @@ bool settingShowCollisionbox = false;
 
 bool gameStart = false;
 
-#include "src/game_manager.h"
-#include "src/entity_manager.h"
-
-#include "src/systems/render_system.h"
-#include "src/systems/update_system.h"
-#include "src/systems/input_system.h"
-
-#include "src/entityV2.h"
-#include "src/playerV2.h"
-#include "src/bullet.h"
-
-Camera camera;
-
-
-void test(EntityV2* pointer) {
-    std::cout << pointer->active << std::endl;
-}
-
 int size = 1;
 
 EntityV2** entityList = (EntityV2**)malloc(size * sizeof(EntityV2*));
 int currentIndex = 0;
+
+int activeBullets = 0;
+int maxActiveBullets = 1;
+
+// bool sizeChanged = false;
 
 void addEntity(EntityV2* entity) {
     if(currentIndex == size) {
@@ -66,6 +55,93 @@ void addEntity(EntityV2* entity) {
     entityList[currentIndex] = entity;
 
     ++currentIndex;
+}
+
+void removeEntity(int entity_index) {
+    delete entityList[entity_index];
+    
+    for(int i = entity_index; i < currentIndex - 1; ++i) {
+        entityList[i] = entityList[i + 1];
+    }
+
+    --currentIndex;
+
+    // sizeChanged = true;
+
+    /* int newSize = size - 1;
+
+    entityList = (EntityV2**)realloc(entityList, newSize * sizeof(EntityV2*));
+
+    if (entityList == NULL) {
+        printf("Error: Memory allocation failed.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    size = newSize;
+
+    std::cout << "after removal: " << size << std::endl; */
+}
+
+void removeNotActive() {
+    std::cout << "current size: " << size << std::endl;
+    int notActiveSize = 0;
+
+    for(int i = 0; i < size; ++i) {
+        if(entityList[i] -> active == false) {
+            ++notActiveSize;
+        }
+    }
+
+    int newSize = size - notActiveSize;
+
+    if(newSize != size) {
+        // delete entityList[entity_index];
+    
+        // for(int i = entity_index; i < currentIndex - 1; ++i) {
+        //     entityList[i] = entityList[i + 1];
+        // }
+
+        // --currentIndex;
+        for(int i = 0; i < size; ++i) {
+            if(entityList[i] -> active == false) {
+                delete entityList[i];
+
+                for(int j = i; j < size - 1; ++j) {
+                    entityList[j] = entityList[j + 1];
+                }
+
+                --currentIndex;
+            }
+        }
+
+        entityList = (EntityV2**)realloc(entityList, newSize * sizeof(EntityV2*));
+
+        if (entityList == NULL) {
+            printf("Error: Memory allocation failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        size = newSize;
+
+        std::cout << "after removal: " << size << std::endl;
+    }
+}
+
+#include "src/game_manager.h"
+#include "src/entity_manager.h"
+
+#include "src/systems/render_system.h"
+#include "src/systems/update_system.h"
+#include "src/systems/input_system.h"
+
+#include "src/playerV2.h"
+#include "src/bullet.h"
+
+Camera camera;
+
+
+void test(EntityV2* pointer) {
+    std::cout << pointer->active << std::endl;
 }
 
 int main() {
@@ -96,7 +172,7 @@ int main() {
     RenderSystem renderSystem;
     InputSystem InputSystem;
 
-    PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
+    PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
     player.active = true;
     addEntity(&player);
 
@@ -136,15 +212,24 @@ int main() {
             newP -> active = true;
 
             addEntity(newP); */
-            Bullet* newBullet = new Bullet(0.0f, 0.0f, 20.0f, 20.0f);
+            if(activeBullets >= maxActiveBullets) {
 
-            newBullet -> x = 300.0f;
-            newBullet -> y = 300.0f;
+            }
+            else {
+                Bullet* newBullet = new Bullet(0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
 
-            newBullet -> active = true;
+                newBullet -> x = 300.0f;
+                newBullet -> y = 300.0f;
 
-            addEntity(newBullet);
+                newBullet -> active = true;
+
+                addEntity(newBullet);
+
+                ++activeBullets;
+            }
         }
+
+        // std::cout << size << std::endl;
 
         InputSystem.processInput(window);
         InputSystem.listen(entityList, size);
@@ -152,6 +237,8 @@ int main() {
         testShader.use();
         updateSystem.update(entityList, size);
         renderSystem.render(entityList, size, &testShader, projection, view);
+
+        removeNotActive();
         
         glfwSwapBuffers(window);
     }

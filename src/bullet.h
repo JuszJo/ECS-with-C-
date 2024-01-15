@@ -15,11 +15,12 @@ class Bullet: public EntityV2 {
 
         Bullet() {};
 
-        Bullet(float position_x, float position_y, float size_width, float size_height) {
+        Bullet(float position_x, float position_y, float size_width, float size_height, int entity_index) {
             x = position_x;
             y = position_y;
             width = size_width;
             height = size_height;
+            index = entity_index;
 
             name = (char*)"bullet";
 
@@ -59,6 +60,11 @@ class Bullet: public EntityV2 {
             speed.x = acceleration;
             applySpeed();
             applyPosition();
+
+            if(x + width > 800.0f) {
+                active = false;
+                // removeEntity(index);
+            }
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
