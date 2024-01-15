@@ -4,7 +4,6 @@
 #include "entityV2.h"
 #include "keyinput.h"
 #include "systems/input_system.h"
-#include "game_manager.h"
 
 class Enemy: public EntityV2 {
     public:

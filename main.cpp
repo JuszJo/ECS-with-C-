@@ -152,8 +152,8 @@ void entityCollision(EntityV2* entity) {
     }
 }
 
-#include "src/game_manager.h"
 #include "src/entity_manager.h"
+#include "src/bullet_manager.h"
 
 #include "src/systems/render_system.h"
 #include "src/systems/update_system.h"
@@ -237,26 +237,7 @@ int main() {
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
 
         if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            /* PlayerV2* newP = new PlayerV2(50.0f * (float)size, 0.0f, 100.0f, 100.0f);
-
-            newP -> active = true;
-
-            addEntity(newP); */
-            if(activeBullets >= maxActiveBullets) {
-
-            }
-            else {
-                Bullet* newBullet = new Bullet(&testShader, 0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
-
-                newBullet -> x = 300.0f;
-                newBullet -> y = 300.0f;
-
-                newBullet -> active = true;
-
-                addEntity(newBullet);
-
-                ++activeBullets;
-            }
+            BulletManager::createBullet(&testShader, 300.0f, 300.0f);
         }
 
         // std::cout << size << std::endl;
