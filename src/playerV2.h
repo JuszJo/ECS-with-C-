@@ -18,7 +18,9 @@ class PlayerV2: public EntityV2 {
 
         PlayerV2() {};
 
-        PlayerV2(float position_x, float position_y, float size_width, float size_height, int entity_index) {
+        PlayerV2(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height, int entity_index) {
+            shader = entity_shader;
+            
             x = position_x;
             y = position_y;
             width = size_width;

@@ -13,6 +13,7 @@ class RenderSystem {
             // std::cout << arraySize << std::endl;
             for(int i = 0; i < arraySize; ++i) {
                 if(entityPointer[i] -> active) {
+                    entityPointer[i] -> shader -> use();
                     entityPointer[i] -> render(shader, projection, view);
                 }
             }

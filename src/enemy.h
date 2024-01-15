@@ -14,7 +14,9 @@ class Enemy: public EntityV2 {
 
         Enemy() {};
 
-        Enemy(float position_x, float position_y, float size_width, float size_height, int entity_index) {
+        Enemy(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height, int entity_index) {
+            shader = entity_shader;
+
             x = position_x;
             y = position_y;
             width = size_width;

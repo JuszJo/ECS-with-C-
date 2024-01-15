@@ -140,7 +140,7 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
     }
 }
 
-void testCollision(EntityV2* entity) {
+void entityCollision(EntityV2* entity) {
     for(int i = 0; i < size; ++i) {
         EntityV2* currentEntity = entityList[i];
         if(currentEntity != entity) {
@@ -198,11 +198,11 @@ int main() {
     RenderSystem renderSystem;
     InputSystem InputSystem;
 
-    PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
+    PlayerV2 player(&testShader, 0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
     player.active = true;
     addEntity(&player);
 
-    Enemy enemy(600.0f, 300.0f, 100.0f, 100.0f, currentIndex);
+    Enemy enemy(&testShader, 600.0f, 300.0f, 100.0f, 100.0f, currentIndex);
     enemy.active = true;
     addEntity(&enemy);
 
@@ -246,7 +246,7 @@ int main() {
 
             }
             else {
-                Bullet* newBullet = new Bullet(0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
+                Bullet* newBullet = new Bullet(&testShader, 0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
 
                 newBullet -> x = 300.0f;
                 newBullet -> y = 300.0f;
@@ -264,7 +264,7 @@ int main() {
         InputSystem.processInput(window);
         InputSystem.listen(entityList, size);
 
-        testShader.use();
+        // testShader.use();
         updateSystem.update(entityList, size);
         renderSystem.render(entityList, size, &testShader, projection, view);
 

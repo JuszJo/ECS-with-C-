@@ -15,7 +15,9 @@ class Bullet: public EntityV2 {
 
         Bullet() {};
 
-        Bullet(float position_x, float position_y, float size_width, float size_height, int entity_index) {
+        Bullet(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height, int entity_index) {
+            shader = entity_shader;
+            
             x = position_x;
             y = position_y;
             width = size_width;
@@ -87,7 +89,7 @@ class Bullet: public EntityV2 {
                 removeBullet();
             }
 
-            testCollision(this);
+            entityCollision(this);
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {

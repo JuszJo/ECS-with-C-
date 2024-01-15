@@ -15,6 +15,8 @@
 
 class EntityV2 {
     public:
+        Shader* shader;
+        
         bool active = false;
 
         int index;
