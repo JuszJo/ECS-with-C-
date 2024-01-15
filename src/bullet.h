@@ -67,15 +67,24 @@ class Bullet: public EntityV2 {
         //     }
         // }
 
+        void removeBullet() {
+            active = false;
+            --activeBullets;
+        }
+
+        void performAction(char* action) override {
+            if(action == (char*)"remove_bullet") {
+                removeBullet();
+            }
+        }
+
         void update() override {
             speed.x = acceleration;
             applySpeed();
             applyPosition();
 
             if(x + width > 800.0f) {
-                active = false;
-                --activeBullets;
-                // removeEntity(index);
+                removeBullet();
             }
 
             testCollision(this);

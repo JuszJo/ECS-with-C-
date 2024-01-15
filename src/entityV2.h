@@ -27,6 +27,8 @@ class EntityV2 {
 
         glm::mat4 model = glm::mat4(1.0f);
 
+        virtual void performAction(char* action) {};
+
         virtual void listen(KeyInput::Keys* keys) {};
 
         virtual void update() {};
