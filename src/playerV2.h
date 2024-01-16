@@ -5,6 +5,8 @@
 #include "keyinput.h"
 #include "systems/input_system.h"
 
+#include "bullet_manager.h"
+
 class PlayerV2: public EntityV2 {
     public:
         glm::vec3 speed = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -67,7 +69,7 @@ class PlayerV2: public EntityV2 {
                 currentState = RIGHT;
             }
             if(keys -> space) {
-
+                BulletManager::createBullet(shader, 300.0f, 300.0f);
             }
             if(!keys -> w && !keys -> s && !keys -> a && !keys -> d) {
                 currentState = IDLE;

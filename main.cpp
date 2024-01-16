@@ -152,7 +152,6 @@ void entityCollision(EntityV2* entity) {
     }
 }
 
-#include "src/entity_manager.h"
 #include "src/bullet_manager.h"
 
 #include "src/systems/render_system.h"
@@ -191,8 +190,6 @@ int main() {
     // Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
-
-    EntityManager entityManager;
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
@@ -236,18 +233,18 @@ int main() {
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
 
-        if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        /* if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
             BulletManager::createBullet(&testShader, 300.0f, 300.0f);
-        }
+        } */
 
         // std::cout << size << std::endl;
 
         InputSystem.processInput(window);
-        InputSystem.listen(entityList, size);
+        InputSystem.listen();
 
         // testShader.use();
-        updateSystem.update(entityList, size);
-        renderSystem.render(entityList, size, &testShader, projection, view);
+        updateSystem.update();
+        renderSystem.render(&testShader, projection, view);
 
         /* if(activeBullets) {
             bool result = entityCollision(*entityList[2], enemy);

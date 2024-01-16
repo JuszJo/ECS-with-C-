@@ -14,10 +14,10 @@ class InputSystem {
             keyInput.processInput(window);
         }
 
-        void listen(EntityV2* entityPointer[], int arraySize) {
-            for(int i = 0; i < arraySize; ++i) {
-                if(entityPointer[i] -> active) {
-                    entityPointer[i] -> listen(&keyInput.key);
+        void listen() {
+            for(int i = 0; i < size; ++i) {
+                if(entityList[i] -> active) {
+                    entityList[i] -> listen(&keyInput.key);
                 }
             }
         }

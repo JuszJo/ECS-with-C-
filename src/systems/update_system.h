@@ -9,11 +9,11 @@ class UpdateSystem {
 
         UpdateSystem() {}
 
-        void update(EntityV2* entityPointer[], int arraySize) {
+        void update() {
             // std::cout << "size in update:" << arraySize << std::endl;
-            for(int i = 0; i < arraySize; ++i) {
-                if(entityPointer[i] -> active) {
-                    entityPointer[i] -> update();
+            for(int i = 0; i < size; ++i) {
+                if(entityList[i] -> active) {
+                    entityList[i] -> update();
                 }
             }
         }
