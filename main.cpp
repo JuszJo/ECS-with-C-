@@ -33,8 +33,6 @@ int currentIndex = 0;
 int activeBullets = 0;
 int maxActiveBullets = 1;
 
-// bool sizeChanged = false;
-
 void addEntity(EntityV2* entity) {
     if(currentIndex == size) {
         // printf("UHMM\n");
