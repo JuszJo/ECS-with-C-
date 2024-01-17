@@ -91,8 +91,6 @@ class Bullet: public EntityV2 {
             if(y + height > 600.0f) {
                 removeBullet();
             }
-
-            // entityCollision(this);
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
