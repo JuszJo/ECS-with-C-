@@ -155,6 +155,7 @@ void entityCollision(EntityV2* entity) {
 #include "src/systems/render_system.h"
 #include "src/systems/update_system.h"
 #include "src/systems/input_system.h"
+#include "src/systems/collision_system.h"
 
 #include "src/playerV2.h"
 #include "src/enemy.h"
@@ -191,7 +192,8 @@ int main() {
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
-    InputSystem InputSystem;
+    InputSystem inputSystem;
+    CollisionSystem collisionSystem;
 
     PlayerV2 player(&testShader, 0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
     player.active = true;
@@ -237,11 +239,12 @@ int main() {
 
         // std::cout << size << std::endl;
 
-        InputSystem.processInput(window);
-        InputSystem.listen();
+        inputSystem.processInput(window);
+        inputSystem.listen();
 
         // testShader.use();
         updateSystem.update();
+        collisionSystem.checkCollision();
         renderSystem.render(&testShader, projection, view);
 
         /* if(activeBullets) {

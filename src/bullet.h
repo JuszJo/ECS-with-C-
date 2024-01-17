@@ -92,7 +92,7 @@ class Bullet: public EntityV2 {
                 removeBullet();
             }
 
-            entityCollision(this);
+            // entityCollision(this);
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
