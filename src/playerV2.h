@@ -69,7 +69,7 @@ class PlayerV2: public EntityV2 {
                 currentState = RIGHT;
             }
             if(keys -> space) {
-                BulletManager::createBullet(shader, 300.0f, 300.0f);
+                BulletManager::createBullet(shader, x + (width / 2), y + height + 20.0f);
             }
             if(!keys -> w && !keys -> s && !keys -> a && !keys -> d) {
                 currentState = IDLE;

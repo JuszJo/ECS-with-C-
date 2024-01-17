@@ -81,11 +81,14 @@ class Bullet: public EntityV2 {
         }
 
         void update() override {
-            speed.x = acceleration;
+            speed.y = acceleration;
             applySpeed();
             applyPosition();
 
             if(x + width > 800.0f) {
+                removeBullet();
+            }
+            if(y + height > 600.0f) {
                 removeBullet();
             }
 
