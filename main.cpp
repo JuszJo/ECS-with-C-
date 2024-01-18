@@ -168,6 +168,8 @@ void test(EntityV2* pointer) {
     std::cout << pointer->active << std::endl;
 }
 
+// TODO: MAKE MORE FIXES
+
 int main() {
     if (!glfwInit()) return 1;
 
