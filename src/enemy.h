@@ -56,6 +56,17 @@ class Enemy: public EntityV2 {
             model = glm::translate(model, glm::vec3(x, y, 0.0f));
         }
 
+        void despawn() {
+            active = false;
+        }
+
+        void performAction(char* action) override {
+            if(action == (char*)"despawn") {
+                printf("hi\n");
+                despawn();
+            }
+        }
+
         void update() override {
             // stateChecker();
             // applySpeed();

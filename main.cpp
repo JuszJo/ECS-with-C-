@@ -135,6 +135,7 @@ bool didCollide(EntityV2 entity1, EntityV2 entity2) {
 void gameActions(EntityV2* entity1, EntityV2* entity2) {
     if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
         entity1 -> performAction((char*)"remove_bullet");
+        entity2 -> performAction((char*)"despawn");
     }
 }
 
@@ -198,13 +199,13 @@ int main() {
     InputSystem inputSystem;
     CollisionSystem collisionSystem;
 
-    PlayerV2 player(&testShader, 0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
-    player.active = true;
-    addEntity(&player);
+    PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
+    player -> active = true;
+    addEntity(player);
 
-    Enemy enemy(&testShader, 600.0f, 300.0f, 100.0f, 100.0f, currentIndex);
-    enemy.active = true;
-    addEntity(&enemy);
+    Enemy* enemy = new Enemy(&testShader, 600.0f, 300.0f, 100.0f, 100.0f, currentIndex);
+    enemy -> active = true;
+    addEntity(enemy);
 
     // PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     // player.active = true;
