@@ -31,6 +31,53 @@ int size = 1;
 EntityV2** entityList = (EntityV2**)malloc(size * sizeof(EntityV2*));
 int currentIndex = 0;
 
+// EVENT GLOBALS
+enum EVENTS {
+    NONE,
+    ENEMY_DESPAWN
+};
+
+int eventSize = 1;
+int realEventSize = 0;
+EVENTS* eventList = (EVENTS*)malloc(eventSize * sizeof(EVENTS));
+int currentEventIndex = 0;
+
+// EVENT GLOBALS FUNCTIONS
+void addEvent(EVENTS event) {
+    if(currentEventIndex == eventSize) {
+        // printf("UHMM\n");
+
+        int newSize = eventSize + 1;
+
+        eventList = (EVENTS*)realloc(eventList, newSize * sizeof(EVENTS));
+
+        // Check if realloc succeeded
+        if (eventList == NULL) {
+            printf("Error: Memory allocation failed.\n");
+            exit(EXIT_FAILURE);
+        }
+
+        eventSize = newSize;
+    }
+
+    eventList[currentEventIndex] = event;
+
+    ++currentEventIndex;
+
+    ++realEventSize;
+}
+
+void testEvents() {
+    for(int i = 0; i < realEventSize; ++i) {
+        if(eventList[i] == EVENTS::ENEMY_DESPAWN) {
+            std::cout << "Event " << i + 1 << ": Enemy Despawn" << std::endl;
+        }
+        if(eventList[i] == EVENTS::NONE) {
+            std::cout << "Event " << i + 1 << ": None" << std::endl;
+        }
+    }
+}
+
 // BULLETS SETTINGS
 int activeBullets = 0;
 int maxActiveBullets = 1;
@@ -143,6 +190,7 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
     if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
         entity1 -> performAction((char*)"remove_bullet");
         entity2 -> performAction((char*)"despawn");
+        addEvent(EVENTS::ENEMY_DESPAWN);
     }
 }
 
@@ -159,7 +207,7 @@ void entityCollision(EntityV2* entity) {
 }
 
 void GameListener() {
-    
+
 }
 
 #include "src/systems/render_system.h"
@@ -270,6 +318,7 @@ int main() {
         } */
 
         removeNotActive();
+        testEvents();
         
         glfwSwapBuffers(window);
     }
