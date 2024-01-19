@@ -169,6 +169,7 @@ void test(EntityV2* pointer) {
 }
 
 // TODO: MAKE MORE FIXES
+// TODO: ADD SPAWNING ENEMIES
 
 int main() {
     if (!glfwInit()) return 1;
