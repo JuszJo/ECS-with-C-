@@ -15,7 +15,7 @@ class EnemyManager {
 
             newEnemy -> active = true;
 
-            addEntity(newEnemy)
+            addEntity(newEnemy);
             /* Bullet* newBullet = new Bullet(shader, 0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
 
             newBullet -> x = position_x;
