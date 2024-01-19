@@ -25,14 +25,21 @@ bool settingShowCollisionbox = false;
 
 bool gameStart = false;
 
+// ENTITY GLOBALS
 int size = 1;
 
 EntityV2** entityList = (EntityV2**)malloc(size * sizeof(EntityV2*));
 int currentIndex = 0;
 
+// BULLETS SETTINGS
 int activeBullets = 0;
 int maxActiveBullets = 1;
 
+// ENEMY SETTINGS
+int spawnBuffer = 100;
+int elapsedSpawnFrames = 0;
+
+// ENTITY GLOBALS FUNCTIONS
 void addEntity(EntityV2* entity) {
     if(currentIndex == size) {
         // printf("UHMM\n");
@@ -151,7 +158,9 @@ void entityCollision(EntityV2* entity) {
     }
 }
 
-#include "src/bullet_manager.h"
+void GameListener() {
+    
+}
 
 #include "src/systems/render_system.h"
 #include "src/systems/update_system.h"
@@ -161,6 +170,9 @@ void entityCollision(EntityV2* entity) {
 #include "src/playerV2.h"
 #include "src/enemy.h"
 #include "src/bullet.h"
+
+#include "src/bullet_manager.h"
+#include "src/enemy_manager.h"
 
 Camera camera;
 
