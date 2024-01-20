@@ -80,7 +80,7 @@ void testEvents() {
 
 // BULLETS SETTINGS
 int activeBullets = 0;
-int maxActiveBullets = 1;
+int maxActiveBullets = 5;
 
 // ENEMY SETTINGS
 int enemyCount = 1;
@@ -89,6 +89,7 @@ int elapsedSpawnFrames = 1;
 
 // ENTITY GLOBALS FUNCTIONS
 void addEntity(EntityV2* entity) {
+    std::cout << "before adding current index: " << currentIndex << std::endl;
     if(currentIndex == size) {
         // printf("UHMM\n");
 
@@ -137,6 +138,7 @@ void removeEntity(int entity_index) {
 
 void removeNotActive() {
     std::cout << "current size: " << size << std::endl;
+    std::cout << "to remove current index: " << currentIndex << std::endl;
     int notActiveSize = 0;
 
     for(int i = 0; i < size; ++i) {
@@ -147,6 +149,8 @@ void removeNotActive() {
 
     int newSize = size - notActiveSize;
 
+    std::cout << "size to remove: " << newSize << std::endl;
+
     if(newSize != size) {
         for(int i = 0; i < size; ++i) {
             if(entityList[i] -> active == false) {
@@ -155,8 +159,6 @@ void removeNotActive() {
                 for(int j = i; j < size - 1; ++j) {
                     entityList[j] = entityList[j + 1];
                 }
-
-                --currentIndex;
             }
         }
 
@@ -169,7 +171,10 @@ void removeNotActive() {
 
         size = newSize;
 
+        currentIndex = size;
+
         std::cout << "after removal: " << size << std::endl;
+        std::cout << "after removal current index: " << currentIndex << std::endl;
     }
 }
 
@@ -230,9 +235,6 @@ void test(EntityV2* pointer) {
     std::cout << pointer->active << std::endl;
 }
 
-// TODO: MAKE MORE FIXES
-// TODO: ADD SPAWNING ENEMIES
-
 int main() {
     if (!glfwInit()) return 1;
 
@@ -264,10 +266,12 @@ int main() {
     player -> active = true;
     addEntity(player);
 
-    Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
+    EnemyManager::createMulitipleEnemies(&testShader, 0.0f, 500.0f, 5);
+
+    /* Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
     enemy->setPosition(200.0f, 400.0f);
     enemy -> active = true;
-    addEntity(enemy);
+    addEntity(enemy); */
 
     // PlayerV2 player(0.0f, 0.0f, 100.0f, 100.0f);
     // player.active = true;

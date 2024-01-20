@@ -18,14 +18,12 @@ class EnemyManager {
             addEntity(newEnemy);
 
             ++enemyCount;
-            /* Bullet* newBullet = new Bullet(shader, 0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
+        }
 
-            newBullet -> x = position_x;
-            newBullet -> y = position_y;
-
-            newBullet -> active = true;
-
-            addEntity(newBullet); */
+        static void createMulitipleEnemies(Shader* shader, float position_x, float position_y, int amount) {
+            for(int i = 0; i < amount; ++i) {
+                createEnemy(shader, position_x + (i * 50.0f), position_y);
+            }
         }
 };
 

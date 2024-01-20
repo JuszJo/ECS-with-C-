@@ -5,11 +5,16 @@
 #include "keyinput.h"
 #include "systems/input_system.h"
 
+#include "bullet_manager.h"
+
 class Enemy: public EntityV2 {
     public:
         glm::vec3 speed = glm::vec3(0.0f, 0.0f, 0.0f);
 
         float acceleration = 5.0f;
+
+        int shootBuffer = 50;
+        int elapsed = 0;
 
         Enemy() {};
 
@@ -68,8 +73,21 @@ class Enemy: public EntityV2 {
             }
         }
 
+        void checkShoot() {
+            if(elapsed % shootBuffer == 0) {
+                BulletManager::createBullet(shader, x + (width / 2), y - 20.0f, true);
+
+                elapsed = 0;
+            }
+
+            // std::cout << "elapsed shoot: " << elapsed << " ";
+
+            ++elapsed;
+        }
+
         void update() override {
             // stateChecker();
+            checkShoot();
             applySpeed();
             applyPosition();
         }

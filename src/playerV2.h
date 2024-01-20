@@ -17,6 +17,11 @@ class PlayerV2: public EntityV2 {
 
         STATE currentState = IDLE;
 
+        int shootBuffer = 10;
+        int elapsed = 1;
+
+        bool canShoot = true;
+
         PlayerV2() {};
 
         PlayerV2(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height, int entity_index) {
@@ -69,11 +74,25 @@ class PlayerV2: public EntityV2 {
                 currentState = RIGHT;
             }
             if(keys -> space) {
-                BulletManager::createBullet(shader, x + (width / 2), y + height + 20.0f);
+                if(canShoot) {
+                    BulletManager::createBullet(shader, x + (width / 2), y + height + 20.0f);
+
+                    canShoot = false;
+                }
             }
             if(!keys -> w && !keys -> s && !keys -> a && !keys -> d) {
                 currentState = IDLE;
             }
+        }
+
+        void shootCooldown() {
+            if(elapsed % shootBuffer == 0) {
+                canShoot = true;
+
+                elapsed = 0;
+            }
+
+            ++elapsed;
         }
 
         void stateChecker() {
@@ -110,6 +129,7 @@ class PlayerV2: public EntityV2 {
         }
 
         void update() override {
+            if(!canShoot) shootCooldown();
             stateChecker();
             applySpeed();
             applyPosition();
