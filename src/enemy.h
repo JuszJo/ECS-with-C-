@@ -58,6 +58,7 @@ class Enemy: public EntityV2 {
 
         void despawn() {
             active = false;
+            --enemyCount;
         }
 
         void performAction(char* action) override {
@@ -69,8 +70,8 @@ class Enemy: public EntityV2 {
 
         void update() override {
             // stateChecker();
-            // applySpeed();
-            // applyPosition();
+            applySpeed();
+            applyPosition();
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {

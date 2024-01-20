@@ -8,14 +8,16 @@ class EnemyManager {
         EnemyManager() {}
 
         static void createEnemy(Shader* shader, float position_x, float position_y) {
-            Enemy* newEnemy = new Enemy(shader, 0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
+            Enemy* newEnemy = new Enemy(shader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
 
-            newEnemy -> x = 200.0f;
-            newEnemy -> y = 500.0f;
+            newEnemy -> x = position_x;
+            newEnemy -> y = position_y;
 
             newEnemy -> active = true;
 
             addEntity(newEnemy);
+
+            ++enemyCount;
             /* Bullet* newBullet = new Bullet(shader, 0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
 
             newBullet -> x = position_x;

@@ -83,8 +83,9 @@ int activeBullets = 0;
 int maxActiveBullets = 1;
 
 // ENEMY SETTINGS
+int enemyCount = 1;
 int spawnBuffer = 100;
-int elapsedSpawnFrames = 0;
+int elapsedSpawnFrames = 1;
 
 // ENTITY GLOBALS FUNCTIONS
 void addEntity(EntityV2* entity) {
@@ -190,7 +191,7 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
     if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
         entity1 -> performAction((char*)"remove_bullet");
         entity2 -> performAction((char*)"despawn");
-        addEvent(EVENTS::ENEMY_DESPAWN);
+        // addEvent(EVENTS::ENEMY_DESPAWN);
     }
 }
 
@@ -259,11 +260,12 @@ int main() {
     InputSystem inputSystem;
     CollisionSystem collisionSystem;
 
-    PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 100.0f, 100.0f, currentIndex);
+    PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
     player -> active = true;
     addEntity(player);
 
-    Enemy* enemy = new Enemy(&testShader, 600.0f, 300.0f, 100.0f, 100.0f, currentIndex);
+    Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
+    enemy->setPosition(200.0f, 400.0f);
     enemy -> active = true;
     addEntity(enemy);
 
@@ -318,7 +320,17 @@ int main() {
         } */
 
         removeNotActive();
-        testEvents();
+        if(enemyCount == 0) {
+            std::cout << "spawn elapsed frames: " << elapsedSpawnFrames << std::endl;
+            if(elapsedSpawnFrames % spawnBuffer == 0) {
+                EnemyManager::createEnemy(&testShader, 200.0f, 400.0f);
+
+                elapsedSpawnFrames = 0;
+            }
+
+            ++elapsedSpawnFrames;
+        }
+        // testEvents();
         
         glfwSwapBuffers(window);
     }
