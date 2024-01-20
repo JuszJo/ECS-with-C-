@@ -80,7 +80,7 @@ void testEvents() {
 
 // BULLETS SETTINGS
 int activeBullets = 0;
-int maxActiveBullets = 5;
+int maxActiveBullets = 10;
 
 // ENEMY SETTINGS
 int enemyCount = 1;
@@ -136,6 +136,19 @@ void removeEntity(int entity_index) {
     std::cout << "after removal: " << size << std::endl; */
 }
 
+void shiftEntityList(int i) {
+    std::cout << "entity to remove: " << entityList[i] -> name << std::endl;
+
+    delete entityList[i];
+
+    for(int j = i; j < size - 1; ++j) {
+        if(entityList[j + 1] -> active == false) {
+            shiftEntityList(j + 1);
+        }
+        entityList[j] = entityList[j + 1];
+    }
+}
+
 void removeNotActive() {
     std::cout << "current size: " << size << std::endl;
     std::cout << "to remove current index: " << currentIndex << std::endl;
@@ -149,16 +162,19 @@ void removeNotActive() {
 
     int newSize = size - notActiveSize;
 
-    std::cout << "size to remove: " << newSize << std::endl;
+    std::cout << "size to remove: " << abs(size - newSize) << std::endl;
 
     if(newSize != size) {
         for(int i = 0; i < size; ++i) {
             if(entityList[i] -> active == false) {
-                delete entityList[i];
+                shiftEntityList(i);
+                // std::cout << "entity to remove: " << entityList[i] -> name << std::endl;
 
-                for(int j = i; j < size - 1; ++j) {
-                    entityList[j] = entityList[j + 1];
-                }
+                // delete entityList[i];
+
+                // for(int j = i; j < size - 1; ++j) {
+                //     entityList[j] = entityList[j + 1];
+                // }
             }
         }
 
@@ -323,7 +339,6 @@ int main() {
             std::cout << "did collide?: " << result << std::endl;
         } */
 
-        removeNotActive();
         if(enemyCount == 0) {
             std::cout << "spawn elapsed frames: " << elapsedSpawnFrames << std::endl;
             if(elapsedSpawnFrames % spawnBuffer == 0) {
@@ -334,6 +349,10 @@ int main() {
 
             ++elapsedSpawnFrames;
         }
+
+        removeNotActive();
+
+        std::cout << "active bullets: " << activeBullets << std::endl;
         // testEvents();
         
         glfwSwapBuffers(window);

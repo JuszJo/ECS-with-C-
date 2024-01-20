@@ -94,6 +94,8 @@ class Bullet: public EntityV2 {
             if(y < 0.0f) {
                 removeBullet();
             }
+
+            std::cout << "bullet isActive: " << active << std::endl;
         }
 
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {

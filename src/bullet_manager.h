@@ -8,7 +8,7 @@ class BulletManager {
         BulletManager() {}
 
         static void createBullet(Shader* shader, float position_x, float position_y, bool reverseDirection = false) {
-            std::cout << "active bullets: " << activeBullets << std::endl;
+            // std::cout << "active bullets: " << activeBullets << std::endl;
             if(activeBullets < maxActiveBullets) {
                 Bullet* newBullet = new Bullet(shader, 0.0f, 0.0f, 20.0f, 20.0f, currentIndex);
 
