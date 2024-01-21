@@ -11,6 +11,8 @@
 
 #include "src/entityV2.h"
 
+// TODO: Add random enemy random shot
+
 struct Camera {
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
     glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
