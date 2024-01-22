@@ -68,7 +68,7 @@ class Enemy: public EntityV2 {
 
         void performAction(char* action) override {
             if(action == (char*)"despawn") {
-                printf("hi\n");
+                // printf("hi\n");
                 despawn();
             }
         }

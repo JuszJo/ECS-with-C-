@@ -91,7 +91,7 @@ int elapsedSpawnFrames = 1;
 
 // ENTITY GLOBALS FUNCTIONS
 void addEntity(EntityV2* entity) {
-    std::cout << "before adding current index: " << currentIndex << std::endl;
+    // std::cout << "before adding current index: " << currentIndex << std::endl;
     if(currentIndex == size) {
         // printf("UHMM\n");
 
@@ -139,7 +139,7 @@ void removeEntity(int entity_index) {
 }
 
 void shiftEntityList(int i) {
-    std::cout << "entity to remove: " << entityList[i] -> name << std::endl;
+    // std::cout << "entity to remove: " << entityList[i] -> name << std::endl;
 
     delete entityList[i];
 
@@ -152,8 +152,8 @@ void shiftEntityList(int i) {
 }
 
 void removeNotActive() {
-    std::cout << "current size: " << size << std::endl;
-    std::cout << "to remove current index: " << currentIndex << std::endl;
+    // std::cout << "current size: " << size << std::endl;
+    // std::cout << "to remove current index: " << currentIndex << std::endl;
     int notActiveSize = 0;
 
     for(int i = 0; i < size; ++i) {
@@ -164,7 +164,7 @@ void removeNotActive() {
 
     int newSize = size - notActiveSize;
 
-    std::cout << "size to remove: " << abs(size - newSize) << std::endl;
+    // std::cout << "size to remove: " << abs(size - newSize) << std::endl;
 
     if(newSize != size) {
         for(int i = 0; i < size; ++i) {
@@ -191,8 +191,8 @@ void removeNotActive() {
 
         currentIndex = size;
 
-        std::cout << "after removal: " << size << std::endl;
-        std::cout << "after removal current index: " << currentIndex << std::endl;
+        // std::cout << "after removal: " << size << std::endl;
+        // std::cout << "after removal current index: " << currentIndex << std::endl;
     }
 }
 
@@ -354,7 +354,7 @@ int main() {
 
         removeNotActive();
 
-        std::cout << "active bullets: " << activeBullets << std::endl;
+        // std::cout << "active bullets: " << activeBullets << std::endl;
         // testEvents();
         
         glfwSwapBuffers(window);
