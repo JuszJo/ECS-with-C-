@@ -22,7 +22,7 @@ class EnemyManager {
 
         static void createMulitipleEnemies(Shader* shader, float position_x, float position_y, int amount) {
             for(int i = 0; i < amount; ++i) {
-                createEnemy(shader, position_x + (i * 50.0f), position_y);
+                createEnemy(shader, position_x + (i * 70.0f), position_y);
             }
         }
 };

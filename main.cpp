@@ -282,7 +282,7 @@ int main() {
     player -> active = true;
     addEntity(player);
 
-    EnemyManager::createMulitipleEnemies(&testShader, 0.0f, 500.0f, 5);
+    EnemyManager::createMulitipleEnemies(&testShader, 0.0f, 500.0f, 10);
 
     /* Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
     enemy->setPosition(200.0f, 400.0f);
