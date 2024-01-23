@@ -80,12 +80,17 @@ void testEvents() {
     }
 }
 
+// LEVEL SETTINGS
+int currentLevel = 1;
+int currentWave = 1;
+
 // BULLETS SETTINGS
 int activeBullets = 0;
 int maxActiveBullets = 30;
 
 // ENEMY SETTINGS
-int enemyCount = 1;
+float enemyStartingPositionY = 500.0f;
+int enemyCount = 0;
 int spawnBuffer = 100;
 int elapsedSpawnFrames = 1;
 
@@ -284,7 +289,7 @@ int main() {
     player -> active = true;
     addEntity(player);
 
-    EnemyManager::createMulitipleEnemies(&testShader, 0.0f, 500.0f, 10);
+    EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
 
     /* Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
     enemy->setPosition(200.0f, 400.0f);
@@ -342,9 +347,20 @@ int main() {
         } */
 
         if(enemyCount == 0) {
-            std::cout << "spawn elapsed frames: " << elapsedSpawnFrames << std::endl;
+            // std::cout << "Enemy Count: " << enemyCount << std::endl;
+            std::cout << "Enemy will spawn in: " << spawnBuffer - elapsedSpawnFrames << std::endl;
+            // std::cout << "spawn elapsed frames: " << elapsedSpawnFrames << std::endl;
             if(elapsedSpawnFrames % spawnBuffer == 0) {
-                EnemyManager::createEnemy(&testShader, 200.0f, 400.0f);
+                ++currentLevel;
+                ++currentWave;
+
+                std::cout << "current Level: " << currentLevel << std::endl;
+
+                float newY = enemyStartingPositionY - ((float)currentLevel * 10.0f);
+                
+                EnemyManager::createMulitipleEnemies(&testShader, 0.0f, newY, 10);
+
+                enemyStartingPositionY = newY;
 
                 elapsedSpawnFrames = 0;
             }
@@ -356,6 +372,8 @@ int main() {
 
         // std::cout << "active bullets: " << activeBullets << std::endl;
         // testEvents();
+
+        // std::cout << "Enemy Count: " << enemyCount << std::endl;
         
         glfwSwapBuffers(window);
     }

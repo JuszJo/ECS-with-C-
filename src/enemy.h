@@ -19,6 +19,7 @@ class Enemy: public EntityV2 {
         int elapsed = 0;
 
         std::random_device rd;
+        int maxShootBuffer = 300;
 
         Enemy() {};
 
@@ -77,10 +78,10 @@ class Enemy: public EntityV2 {
             }
         }
 
-        int random() {
+        int random(int min = 10, int max = 300) {
             std::mt19937 gen(rd());
 
-            std::uniform_int_distribution<int> distribution(10, 300);
+            std::uniform_int_distribution<int> distribution(10, max);
 
             int randomNumber = distribution(gen);
 
@@ -93,9 +94,11 @@ class Enemy: public EntityV2 {
 
                 elapsed = 0;
 
-                int check = random();
+                if(maxShootBuffer < 100) maxShootBuffer = 100;
 
-                std::cout << "random: " << check << std::endl;
+                int check = random(10, maxShootBuffer);
+
+                // std::cout << "random: " << check << std::endl;
 
                 shootBuffer = check;
             }
