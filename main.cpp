@@ -22,8 +22,10 @@ struct Camera {
 
 // WINDOW SETTINGS
 int display_w, display_h;
+double cursor_position_x, cursor_position_y;
 
 // GAME SETTINGS
+bool gameStart = false;
 bool gameOver = false;
 int gameOverBuffer = 100;
 int elapsedGameOverFrames = 1;
@@ -253,6 +255,8 @@ void GameListener() {
 #include "src/enemy.h"
 #include "src/bullet.h"
 
+#include "src/button.h"
+
 #include "src/bullet_manager.h"
 #include "src/enemy_manager.h"
 
@@ -261,6 +265,10 @@ Camera camera;
 
 void test(EntityV2* pointer) {
     std::cout << pointer->active << std::endl;
+}
+
+void start_game() {
+    gameStart = true;
 }
 
 int main() {
@@ -275,6 +283,8 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
+    glfwGetFramebufferSize(window, &display_w, &display_h);
+    glfwGetCursorPos(window, &cursor_position_x, &cursor_position_y);
 
     glewInit();
 
@@ -284,6 +294,7 @@ int main() {
     // Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
+    Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
@@ -295,6 +306,9 @@ int main() {
     addEntity(player);
 
     EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
+
+    Button playButton(&menuShader, (char*)"src\\assets\\playbutton.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
+    playButton.setPosition(300.0f, 300.0f);
 
     /* Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
     enemy->setPosition(200.0f, 400.0f);
@@ -336,15 +350,22 @@ int main() {
         } */
 
         // std::cout << size << std::endl;
+        if(!gameStart) {
+            playButton.checkMousePress(window);
+            playButton.update();
+            playButton.render(projection);
+        }
+        else {
+            inputSystem.processInput(window);
+            inputSystem.listen();
 
-        inputSystem.processInput(window);
-        inputSystem.listen();
+            // testShader.use();
+            updateSystem.update();
+            collisionSystem.wallCollision();
+            collisionSystem.checkCollision();
+            renderSystem.render(&testShader, projection, view);
+        }
 
-        // testShader.use();
-        updateSystem.update();
-        collisionSystem.wallCollision();
-        collisionSystem.checkCollision();
-        renderSystem.render(&testShader, projection, view);
 
         /* if(activeBullets) {
             bool result = entityCollision(*entityList[2], enemy);
@@ -393,6 +414,8 @@ int main() {
         // testEvents();
 
         // std::cout << "Enemy Count: " << enemyCount << std::endl;
+
+        glfwGetCursorPos(window, &cursor_position_x, &cursor_position_y);
         
         glfwSwapBuffers(window);
     }
