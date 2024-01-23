@@ -337,6 +337,7 @@ int main() {
 
         // testShader.use();
         updateSystem.update();
+        collisionSystem.wallCollision();
         collisionSystem.checkCollision();
         renderSystem.render(&testShader, projection, view);
 

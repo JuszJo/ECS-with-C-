@@ -27,7 +27,12 @@ class CollisionSystem {
         void wallCollision() {
             for(int i = 0; i < size; ++i) {
                 if(entityList[i] -> active) {
-                    entityList[i] -> update();
+                    if(entityList[i] -> x < 0.0f) {
+                        entityList[i] -> setPosition(0.0f, entityList[i] -> y);
+                    }
+                    if(entityList[i] -> x + entityList[i] -> width > 800.0f) {
+                        entityList[i] -> setPosition(800.0f - entityList[i] -> width, entityList[i] -> y);
+                    }
                 }
             }
         }
