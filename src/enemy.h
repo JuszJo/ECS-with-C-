@@ -71,10 +71,17 @@ class Enemy: public EntityV2 {
             --enemyCount;
         }
 
+        void setMaxShootBuffer(int amount) {
+            maxShootBuffer = amount;
+        }
+
         void performAction(char* action) override {
             if(action == (char*)"despawn") {
                 // printf("hi\n");
                 despawn();
+            }
+            if(action == (char*)"reduce_max_shoot_buffer") {
+                setMaxShootBuffer(maxShootBuffer - ((50 * currentLevel) - 50));
             }
         }
 

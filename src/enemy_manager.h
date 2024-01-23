@@ -25,6 +25,14 @@ class EnemyManager {
                 createEnemy(shader, position_x + (i * 80.0f), position_y);
             }
         }
+
+        static void reduceMaxShootBuffer() {
+            for(int i = 0; i < size; ++i) {
+                if(entityList[i] -> active && entityList[i] -> name == (char*)"enemy") {
+                    entityList[i] -> performAction((char*)"reduce_max_shoot_buffer");
+                }
+            }
+        }
 };
 
 

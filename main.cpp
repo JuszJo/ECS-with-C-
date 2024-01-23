@@ -366,6 +366,7 @@ int main() {
                 float newY = enemyStartingPositionY;
                 
                 EnemyManager::createMulitipleEnemies(&testShader, 0.0f, newY, 10);
+                EnemyManager::reduceMaxShootBuffer();
 
                 enemyStartingPositionY = newY;
 
