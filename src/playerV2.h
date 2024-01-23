@@ -75,7 +75,7 @@ class PlayerV2: public EntityV2 {
             }
             if(keys -> space) {
                 if(canShoot) {
-                    BulletManager::createBullet(shader, x + (width / 2), y + height + 20.0f);
+                    BulletManager::createBullet(shader, x + (width / 2), y + height + 10.0f);
 
                     canShoot = false;
                 }

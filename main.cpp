@@ -82,7 +82,7 @@ void testEvents() {
 
 // BULLETS SETTINGS
 int activeBullets = 0;
-int maxActiveBullets = 10;
+int maxActiveBullets = 30;
 
 // ENEMY SETTINGS
 int enemyCount = 1;

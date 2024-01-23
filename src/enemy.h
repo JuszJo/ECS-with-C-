@@ -1,6 +1,8 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#include <random>
+
 #include "entityV2.h"
 #include "keyinput.h"
 #include "systems/input_system.h"
@@ -15,6 +17,8 @@ class Enemy: public EntityV2 {
 
         int shootBuffer = 50;
         int elapsed = 0;
+
+        std::random_device rd;
 
         Enemy() {};
 
@@ -73,11 +77,27 @@ class Enemy: public EntityV2 {
             }
         }
 
+        int random() {
+            std::mt19937 gen(rd());
+
+            std::uniform_int_distribution<int> distribution(10, 300);
+
+            int randomNumber = distribution(gen);
+
+            return randomNumber;
+        }
+
         void checkShoot() {
             if(elapsed % shootBuffer == 0) {
-                BulletManager::createBullet(shader, x + (width / 2), y - 20.0f, true);
+                BulletManager::createBullet(shader, x + (width / 2), y - 10.0f, true);
 
                 elapsed = 0;
+
+                int check = random();
+
+                std::cout << "random: " << check << std::endl;
+
+                shootBuffer = check;
             }
 
             // std::cout << "elapsed shoot: " << elapsed << " ";
