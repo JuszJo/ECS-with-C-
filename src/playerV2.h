@@ -117,6 +117,17 @@ class PlayerV2: public EntityV2 {
             }
         }
 
+        void despawn() {
+            active = false;
+            gameOver = true;
+        }
+
+        void performAction(char* action) {
+            if(action == (char*)"despawn") {
+                despawn();
+            }
+        }
+
         void applySpeed() {
             x += speed.x;
             y += speed.y;

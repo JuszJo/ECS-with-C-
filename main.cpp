@@ -20,12 +20,13 @@ struct Camera {
     float cameraSpeed = 2.0f;
 };
 
+// WINDOW SETTINGS
 int display_w, display_h;
 
-bool settingShowHitbox = true;
-bool settingShowCollisionbox = false;
-
-bool gameStart = false;
+// GAME SETTINGS
+bool gameOver = false;
+int gameOverBuffer = 100;
+int elapsedGameOverFrames = 1;
 
 // ENTITY GLOBALS
 int size = 1;
@@ -221,6 +222,10 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
         entity2 -> performAction((char*)"despawn");
         // addEvent(EVENTS::ENEMY_DESPAWN);
     }
+    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
+        entity1 -> performAction((char*)"remove_bullet");
+        entity2 -> performAction((char*)"despawn");
+    }
 }
 
 void entityCollision(EntityV2* entity) {
@@ -357,7 +362,8 @@ int main() {
 
                 std::cout << "current Level: " << currentLevel << std::endl;
 
-                float newY = enemyStartingPositionY - ((float)currentLevel * 10.0f);
+                // float newY = enemyStartingPositionY - ((float)currentLevel * 10.0f);
+                float newY = enemyStartingPositionY;
                 
                 EnemyManager::createMulitipleEnemies(&testShader, 0.0f, newY, 10);
 
@@ -371,6 +377,17 @@ int main() {
 
         removeNotActive();
 
+        if(gameOver) {
+            std::cout << "time to game closing: " << gameOverBuffer - elapsedGameOverFrames << std::endl;
+            if(elapsedGameOverFrames % gameOverBuffer == 0) {
+                glfwSetWindowShouldClose(window, GL_TRUE);
+
+                elapsedGameOverFrames = 1;
+            }
+
+            ++elapsedGameOverFrames;
+        }
+
         // std::cout << "active bullets: " << activeBullets << std::endl;
         // testEvents();
 
@@ -378,6 +395,10 @@ int main() {
         
         glfwSwapBuffers(window);
     }
+
+    glDeleteProgram(testShader.shaderProgram);
+    glfwDestroyWindow(window);
+    glfwTerminate();
 
     return 1;
 }
