@@ -352,6 +352,8 @@ int main() {
             std::cout << "did collide?: " << result << std::endl;
         } */
 
+        removeNotActive();
+
         if(enemyCount == 0) {
             // std::cout << "Enemy Count: " << enemyCount << std::endl;
             std::cout << "Enemy will spawn in: " << spawnBuffer - elapsedSpawnFrames << std::endl;
@@ -375,8 +377,6 @@ int main() {
 
             ++elapsedSpawnFrames;
         }
-
-        removeNotActive();
 
         if(gameOver) {
             std::cout << "time to game closing: " << gameOverBuffer - elapsedGameOverFrames << std::endl;

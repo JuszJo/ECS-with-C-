@@ -124,6 +124,7 @@ class PlayerV2: public EntityV2 {
 
         void performAction(char* action) {
             if(action == (char*)"despawn") {
+                printf("player died\n");
                 despawn();
             }
         }
