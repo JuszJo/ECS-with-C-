@@ -20,7 +20,7 @@ class EnemyManager {
             ++enemyCount;
         } */
         static void createEnemy(Shader* shader, float position_x, float position_y) {
-            Enemy* newEnemy = new Enemy(shader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
+            Enemy* newEnemy = new Enemy(shader, 0.0f, 0.0f, 50.0f, 50.0f);
 
             newEnemy->x = position_x;
             newEnemy->y = position_y;

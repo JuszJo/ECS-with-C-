@@ -15,14 +15,13 @@ class Bullet: public EntityV2 {
 
         Bullet() {};
 
-        Bullet(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height, int entity_index) {
+        Bullet(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height) {
             shader = entity_shader;
             
             x = position_x;
             y = position_y;
             width = size_width;
-            height = size_height;
-            index = entity_index;
+            height = size_height;            
 
             name = (char*)"bullet";
 

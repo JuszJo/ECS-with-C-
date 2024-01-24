@@ -5,19 +5,9 @@
 
 class RenderSystem {
     public:
-        int currentIndex = 0;
 
         RenderSystem() {}
 
-        /* void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {
-            // std::cout << arraySize << std::endl;
-            for(int i = 0; i < size; ++i) {
-                if(entityList[i] -> active) {
-                    entityList[i] -> shader -> use();
-                    entityList[i] -> render(shader, projection, view);
-                }
-            }
-        } */
         void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {
             // std::cout << arraySize << std::endl;
             for(int i = 0; i < entityManager.entity_list.size(); ++i) {

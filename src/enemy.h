@@ -23,14 +23,13 @@ class Enemy: public EntityV2 {
 
         Enemy() {};
 
-        Enemy(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height, int entity_index) {
+        Enemy(Shader* entity_shader, float position_x, float position_y, float size_width, float size_height) {
             shader = entity_shader;
 
             x = position_x;
             y = position_y;
             width = size_width;
             height = size_height;
-            index = entity_index;
 
             name = (char*)"enemy";
 

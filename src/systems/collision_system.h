@@ -5,7 +5,6 @@
 
 class CollisionSystem {
     public:
-        int currentIndex = 0;
 
         CollisionSystem() {}
 

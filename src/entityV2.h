@@ -19,8 +19,6 @@ class EntityV2 {
         
         bool active = false;
 
-        int index;
-
         char* name;
         
         unsigned int VAO, VBO, EBO, TBO;
