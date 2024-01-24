@@ -11,6 +11,9 @@
 #include "utils/my_array.h"
 
 #include "src/entityV2.h"
+#include "src/entity_manager.h"
+
+// EntityManager entityManager;
 
 // TODO: Add random enemy random shot
 
@@ -247,6 +250,8 @@ void GameListener() {
 
 }
 
+EntityManager entityManager;
+
 #include "src/systems/render_system.h"
 #include "src/systems/update_system.h"
 #include "src/systems/input_system.h"
@@ -302,9 +307,12 @@ int main() {
     InputSystem inputSystem;
     CollisionSystem collisionSystem;
 
-    PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 40.0f, 40.0f, currentIndex);
+    /* PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 40.0f, 40.0f, currentIndex);
     player -> active = true;
-    addEntity(player);
+    addEntity(player); */
+    PlayerV2 player(&testShader, 0.0f, 0.0f, 40.0f, 40.0f, currentIndex);
+    player.active = true;
+    entityManager.addEntity(&player);
 
     EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
 
@@ -374,7 +382,8 @@ int main() {
             std::cout << "did collide?: " << result << std::endl;
         } */
 
-        removeNotActive();
+        // removeNotActive();
+        entityManager.removeInactive();
 
         if(enemyCount == 0) {
             // std::cout << "Enemy Count: " << enemyCount << std::endl;

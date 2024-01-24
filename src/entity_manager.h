@@ -5,54 +5,25 @@
 
 class EntityManager {
     public:
-        EntityV2* entityList[2];
-        int currentIndex = 0;
+        MyArray<EntityV2*> entity_list;
 
         EntityManager() {}
 
         void addEntity(EntityV2* entity) {
-            entityList[currentIndex] = entity;
-
-            ++currentIndex;
+            entity_list.add_element(entity);
         }
 
-        EntityV2* getEntity(char* name) {
-            for(int i = 0; i < sizeof(entityList) / sizeof(entityList[0]); ++i) {
-                if(entityList[i] -> name == name) {
-                    return entityList[i];
+        void removeInactive() {
+            int elementsRemoved = 0;
+
+            for(int i = 0; i < entity_list.size(); ++i) {
+                if(entity_list[i]->active == false) {
+                    entity_list.remove_element(i);
+                    
+                    --i;
                 }
             }
-
-            return NULL;
         }
-
-        /* EntityV2** getEntities(char** arr, int arraySize) {
-            int foundEntities = 0;
-
-            for(int i = 0; i < sizeof(entityList) / sizeof(entityList[0]); ++i) {
-                for(int j = 0; j < arraySize; ++j) {
-                    if(entityList[i] -> name == arr[i]) {
-
-                        ++foundEntities;
-                    }
-                }
-            }
-
-            EntityV2** entities = (EntityV2**)malloc(foundEntities * sizeof(EntityV2));
-            int entityIndex = 0;
-
-            for(int i = 0; i < sizeof(entityList) / sizeof(entityList[0]); ++i) {
-                for(int j = 0; j < arraySize; ++j) {
-                    if(entityList[i] -> name == arr[i]) {
-
-                        entities[entityIndex] = entityList[i];
-                        ++entityIndex;
-                    }
-                }
-            }
-
-            return entities;
-        } */
 };
 
 #endif

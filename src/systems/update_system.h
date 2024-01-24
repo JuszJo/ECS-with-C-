@@ -9,11 +9,19 @@ class UpdateSystem {
 
         UpdateSystem() {}
 
-        void update() {
+        /* void update() {
             // std::cout << "size in update:" << arraySize << std::endl;
             for(int i = 0; i < size; ++i) {
                 if(entityList[i] -> active) {
                     entityList[i] -> update();
+                }
+            }
+        } */
+        void update() {
+            // std::cout << "size in update:" << arraySize << std::endl;
+            for(int i = 0; i < entityManager.entity_list.size(); ++i) {
+                if(entityManager.entity_list[i]->active) {
+                    entityManager.entity_list[i]->update();
                 }
             }
         }

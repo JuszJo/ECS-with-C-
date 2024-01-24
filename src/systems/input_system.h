@@ -14,10 +14,17 @@ class InputSystem {
             keyInput.processInput(window);
         }
 
-        void listen() {
+        /* void listen() {
             for(int i = 0; i < size; ++i) {
                 if(entityList[i] -> active) {
                     entityList[i] -> listen(&keyInput.key);
+                }
+            }
+        } */
+        void listen() {
+            for(int i = 0; i < entityManager.entity_list.size(); ++i) {
+                if(entityManager.entity_list[i]->active) {
+                    entityManager.entity_list[i]->listen(&keyInput.key);
                 }
             }
         }
