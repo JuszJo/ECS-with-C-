@@ -8,6 +8,7 @@
 
 #include "libs/shader.h"
 #include "libs/stb_image.h"
+#include "utils/my_array.h"
 
 #include "src/entityV2.h"
 

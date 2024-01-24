@@ -1,1 +1,4 @@
 .vscode/settings.json
+test.cpp
+test.exe
+src/menu.h
