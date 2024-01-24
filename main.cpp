@@ -208,20 +208,6 @@ void removeNotActive() {
     }
 }
 
-bool didCollide(EntityV2 entity1, EntityV2 entity2) {
-    if(
-        entity1.x + entity1.width > entity2.x &&
-        entity1.x < entity2.x + entity2.width &&
-        entity1.y + entity1.height > entity2.y &&
-        entity1.y < entity2.y + entity2.height
-    ) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 void gameActions(EntityV2* entity1, EntityV2* entity2) {
     if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
         entity1 -> performAction((char*)"remove_bullet");
@@ -231,18 +217,6 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
     if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
         entity1 -> performAction((char*)"remove_bullet");
         entity2 -> performAction((char*)"despawn");
-    }
-}
-
-void entityCollision(EntityV2* entity) {
-    for(int i = 0; i < size; ++i) {
-        EntityV2* currentEntity = entityList[i];
-        if(currentEntity != entity) {
-            if(didCollide(*entity, *currentEntity)) {
-                gameActions(entity, currentEntity);
-                // std::cout << "collided with" << currentEntity -> name << std::endl;
-            }
-        }
     }
 }
 
