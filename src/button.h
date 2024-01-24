@@ -58,6 +58,27 @@ class Button {
             height = newHeight;
         }
 
+        void scale(float scaleX, float scaleY) {
+            float scaledWidth = width * scaleX;
+            float scaledHeight = height * scaleY;
+
+            float dWidth = width - scaledWidth;
+            float dHeight = height - scaledHeight;
+
+            float newX = x + (dWidth / 2);
+            float newY = y + (dHeight / 2);
+            // float newX = x;
+            // float newY = y;
+
+            // std::cout << "newX: " << newX << "\t" << "newY: " << newY << std::endl;
+
+            model = glm::mat4(1.0f);
+
+            model = glm::translate(model, glm::vec3(newX, newY, 0.0f));
+
+            model = glm::scale(model, glm::vec3(scaleX, scaleY, 1.0f));
+        }
+
         virtual void setPosition(float newX, float newY) {
             model = glm::translate(model, glm::vec3(newX, newY, 0.0f));
 
@@ -118,6 +139,10 @@ class Button {
         }
 
         void update() {
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, glm::vec3(x, y, 0.0f));
+            if(checkHover()) scale(2.0f, 2.0f);
+
             if(checkHover() && mousePressed) runAction();
         }
 

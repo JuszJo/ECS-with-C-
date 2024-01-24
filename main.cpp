@@ -301,14 +301,14 @@ int main() {
     InputSystem inputSystem;
     CollisionSystem collisionSystem;
 
-    PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
+    PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 40.0f, 40.0f, currentIndex);
     player -> active = true;
     addEntity(player);
 
     EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
 
     Button playButton(&menuShader, (char*)"src\\assets\\playbutton.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
-    playButton.setPosition(300.0f, 300.0f);
+    playButton.updatePosition(300.0f, 300.0f);
 
     /* Enemy* enemy = new Enemy(&testShader, 0.0f, 0.0f, 50.0f, 50.0f, currentIndex);
     enemy->setPosition(200.0f, 400.0f);
