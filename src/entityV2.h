@@ -33,7 +33,7 @@ class EntityV2 {
 
         virtual void update() {};
 
-        virtual void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {
+        virtual void render(glm::mat4 projection, glm::mat4 view) {
             printf("LOL\n");
         };
 

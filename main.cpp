@@ -125,7 +125,7 @@ int main() {
     player.active = true;
     entityManager.addEntity(&player);
 
-    EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
+    EnemyManager::createMulitipleEnemies(&playerShader, 0.0f, enemyStartingPositionY, 10);
 
     Button playButton(&menuShader, (char*)"src\\assets\\playbutton.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
     playButton.updatePosition(300.0f, 300.0f);
@@ -166,7 +166,7 @@ int main() {
             updateSystem.update();
             collisionSystem.wallCollision();
             collisionSystem.checkCollision();
-            renderSystem.render(&testShader, projection, view);
+            renderSystem.render(projection, view);
         }
 
         entityManager.removeInactive();
@@ -181,7 +181,7 @@ int main() {
 
                 std::cout << "current Level: " << currentLevel << std::endl;
                 
-                EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
+                EnemyManager::createMulitipleEnemies(&playerShader, 0.0f, enemyStartingPositionY, 10);
                 EnemyManager::reduceMaxShootBuffer();
 
                 elapsedSpawnFrames = 0;

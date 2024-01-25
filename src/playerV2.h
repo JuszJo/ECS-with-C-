@@ -148,7 +148,7 @@ class PlayerV2: public EntityV2 {
             applyPosition();
         }
 
-        void render(Shader* shader, glm::mat4 projection, glm::mat4 view) override {
+        void render(glm::mat4 projection, glm::mat4 view) override {
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));

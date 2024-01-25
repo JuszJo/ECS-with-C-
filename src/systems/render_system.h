@@ -8,12 +8,12 @@ class RenderSystem {
 
         RenderSystem() {}
 
-        void render(Shader* shader, glm::mat4 projection, glm::mat4 view) {
+        void render(glm::mat4 projection, glm::mat4 view) {
             // std::cout << arraySize << std::endl;
             for(int i = 0; i < entityManager.entity_list.size(); ++i) {
                 if(entityManager.entity_list[i]->active) {
                     entityManager.entity_list[i]->shader -> use();
-                    entityManager.entity_list[i]->render(shader, projection, view);
+                    entityManager.entity_list[i]->render(projection, view);
                 }
             }
         }
