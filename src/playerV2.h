@@ -34,13 +34,13 @@ class PlayerV2: public EntityV2 {
 
             name = (char*)"player";
 
-            stride = 3;
+            stride = 5;
 
             float vertices[20] = {
-                x, y, 0.0f,
-                x + width, y, 0.0f,
-                x, y + height, 0.0f,
-                x + width, y + height, 0.0f
+                x, y, 0.0f, 0.0f, 1.0f,
+                x + width, y, 0.0f, 1.0f, 1.0f,
+                x, y + height, 0.0f, 0.0f, 0.0f,
+                x + width, y + height, 0.0f, 1.0f, 0.0f
             };
 
             genVertexandBuffers(&VAO, &VBO);
@@ -50,9 +50,11 @@ class PlayerV2: public EntityV2 {
             handleVertexBufferObject(VBO, vertices, verticeSize);
 
             handleVertexArrayObject(0, 3, stride, 0);
-            // handleVertexArrayObject(1, 2, stride, 3);
+            handleVertexArrayObject(1, 2, stride, 3);
 
             cleanupBuffers();
+
+            loadImage((char*)"src\\assets\\spaceship.png", &TBO);
         }
 
         void listen(KeyInput::Keys* keys) override {
@@ -74,7 +76,7 @@ class PlayerV2: public EntityV2 {
             }
             if(keys -> space) {
                 if(canShoot) {
-                    BulletManager::createBullet(shader, x + (width / 2), y + height + 10.0f);
+                    BulletManager::createBullet(shader, (x + (width / 2)) - (BulletManager::width / 2), y + height + 2.0f);
 
                     canShoot = false;
                 }
@@ -150,6 +152,7 @@ class PlayerV2: public EntityV2 {
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            glBindTexture(GL_TEXTURE_2D, TBO);
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }

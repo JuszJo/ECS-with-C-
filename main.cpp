@@ -109,6 +109,7 @@ int main() {
     // Shader cShader("shaders/collision/collisionVertexShader.glsl", "shaders/collision/collisionFragmentShader.glsl");
     // Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
+    Shader playerShader("shaders/player/vertShader.glsl", "shaders/player/fragShader.glsl");
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
     Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
@@ -120,7 +121,7 @@ int main() {
     /* PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 40.0f, 40.0f, currentIndex);
     player -> active = true;
     addEntity(player); */
-    PlayerV2 player(&testShader, 0.0f, 0.0f, 40.0f, 40.0f);
+    PlayerV2 player(&playerShader, 0.0f, 0.0f, 40.0f, 40.0f);
     player.active = true;
     entityManager.addEntity(&player);
 
@@ -136,7 +137,6 @@ int main() {
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 
     while (!glfwWindowShouldClose(window)) {
         glfwGetFramebufferSize(window, &display_w, &display_h);

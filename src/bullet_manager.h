@@ -5,12 +5,15 @@
 
 class BulletManager {
     public:
+        static float width;
+        static float height;
+
         BulletManager() {}
 
         static void createBullet(Shader* shader, float position_x, float position_y, bool reverseDirection = false) {
             // std::cout << "active bullets: " << activeBullets << std::endl;
             if(activeBullets < maxActiveBullets) {
-                Bullet* newBullet = new Bullet(shader, 0.0f, 0.0f, 10.0f, 10.0f);
+                Bullet* newBullet = new Bullet(shader, 0.0f, 0.0f, width, height);
 
                 newBullet->x = position_x;
                 newBullet->y = position_y;
@@ -26,5 +29,7 @@ class BulletManager {
         }
 };
 
+float BulletManager::width = 10.0f;
+float BulletManager::height = 10.0f;
 
 #endif
