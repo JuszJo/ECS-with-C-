@@ -60,10 +60,6 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
     }
 }
 
-void GameListener() {
-
-}
-
 EntityManager entityManager;
 
 #include "src/systems/render_system.h"
@@ -184,14 +180,9 @@ int main() {
                 ++currentWave;
 
                 std::cout << "current Level: " << currentLevel << std::endl;
-
-                // float newY = enemyStartingPositionY - ((float)currentLevel * 10.0f);
-                float newY = enemyStartingPositionY;
                 
-                EnemyManager::createMulitipleEnemies(&testShader, 0.0f, newY, 10);
+                EnemyManager::createMulitipleEnemies(&testShader, 0.0f, enemyStartingPositionY, 10);
                 EnemyManager::reduceMaxShootBuffer();
-
-                enemyStartingPositionY = newY;
 
                 elapsedSpawnFrames = 0;
             }

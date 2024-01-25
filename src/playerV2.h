@@ -17,7 +17,7 @@ class PlayerV2: public EntityV2 {
 
         STATE currentState = IDLE;
 
-        int shootBuffer = 10;
+        int shootBuffer = 25;
         int elapsed = 1;
 
         bool canShoot = true;
