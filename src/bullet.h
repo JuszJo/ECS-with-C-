@@ -9,9 +9,7 @@ class Bullet: public EntityV2 {
 
         float acceleration = 5.0f;
 
-        // enum STATE {UP, DOWN, LEFT, RIGHT, IDLE};
-
-        // STATE currentState = IDLE;
+        float color[3];
 
         Bullet() {};
 
@@ -103,6 +101,7 @@ class Bullet: public EntityV2 {
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "view"), 1, GL_FALSE, glm::value_ptr(view));
             glUniformMatrix4fv(glGetUniformLocation(shader -> shaderProgram, "model"), 1, GL_FALSE, glm::value_ptr(model));
+            setUniformVec3f(shader, (char*)"bulletColor", color[0], color[1], color[2]);
             glBindTexture(GL_TEXTURE_2D, TBO);
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);

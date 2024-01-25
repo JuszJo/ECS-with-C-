@@ -98,7 +98,7 @@ class Enemy: public EntityV2 {
 
         void checkShoot() {
             if(elapsed % shootBuffer == 0) {
-                BulletManager::createBullet(shader, x + (width / 2), y - 10.0f, true);
+                BulletManager::createBullet(shader, x + (width / 2), y - BulletManager::height, "red", true);
 
                 elapsed = 0;
 

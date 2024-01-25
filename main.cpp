@@ -110,8 +110,11 @@ int main() {
     // Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
     Shader playerShader("shaders/player/vertShader.glsl", "shaders/player/fragShader.glsl");
+    Shader bulletShader("shaders/bullet/vertShader.glsl", "shaders/bullet/fragShader.glsl");
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
     Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
+
+    BulletManager::bulletShader = &bulletShader;
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
