@@ -91,7 +91,7 @@ void start_game() {
 int main() {
     if (!glfwInit()) return 1;
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "ImGui Example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "Space Shooters", NULL, NULL);
 
     if (!window) {
         glfwTerminate();
@@ -131,8 +131,8 @@ int main() {
 
     EnemyManager::createMulitipleEnemies(&playerShader, 0.0f, enemyStartingPositionY, 10);
 
-    Button playButton(&menuShader, (char*)"src\\assets\\playbutton.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
-    playButton.updatePosition(300.0f, 300.0f);
+    Button playButton(&menuShader, (char*)"src\\assets\\play.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
+    playButton.updatePosition(400.0f - (playButton.width / 2), 300.0f - (playButton.height / 2));
 
     Menu mainMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
 
