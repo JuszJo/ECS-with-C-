@@ -72,6 +72,7 @@ EntityManager entityManager;
 #include "src/bullet.h"
 
 #include "src/button.h"
+#include "src/menu.h"
 
 #include "src/bullet_manager.h"
 #include "src/enemy_manager.h"
@@ -133,6 +134,8 @@ int main() {
     Button playButton(&menuShader, (char*)"src\\assets\\playbutton.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
     playButton.updatePosition(300.0f, 300.0f);
 
+    Menu mainMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
+
     glm::mat4 projection = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
 
@@ -158,6 +161,7 @@ int main() {
 
         // std::cout << size << std::endl;
         if(!gameStart) {
+            mainMenu.render(projection);
             playButton.checkMousePress(window);
             playButton.update();
             playButton.render(projection);

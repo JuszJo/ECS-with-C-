@@ -110,7 +110,7 @@ class EntityV2 {
             glEnableVertexAttribArray(location);
         }
 
-        void loadImage(char* path, unsigned int* TBO) {
+        virtual void loadImage(char* path, unsigned int* TBO) {
             int width, height, nChannels;
 
             stbi_uc* imageData = stbi_load(path, &width, &height, &nChannels, 0);
