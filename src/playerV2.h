@@ -156,6 +156,24 @@ class PlayerV2: public EntityV2 {
             glBindVertexArray(VAO);
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         }
+
+        void resetEntity() {
+            x = 0.0f;
+            y = 0.0f;
+            
+            speed = glm::vec3(0.0f, 0.0f, 0.0f);
+
+            acceleration = 5.0f;
+
+            currentState = IDLE;
+
+            shootBuffer = 25;
+            elapsed = 1;
+
+            canShoot = true;
+
+            resetModel();
+        }
 };
 
 #endif

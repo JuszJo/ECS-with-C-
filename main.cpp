@@ -48,6 +48,27 @@ int enemyCount = 0;
 int spawnBuffer = 100;
 int elapsedSpawnFrames = 1;
 
+void startAgain() {
+    gameStart = false;
+    gameOver = false;
+    gameOverBuffer = 100;
+    elapsedGameOverFrames = 1;
+
+    // LEVEL SETTINGS
+    currentLevel = 1;
+    currentWave = 1;
+
+    // BULLETS SETTINGS
+    activeBullets = 0;
+    maxActiveBullets = 30;
+
+    // ENEMY SETTINGS
+    enemyStartingPositionY = 500.0f;
+    enemyCount = 0;
+    spawnBuffer = 100;
+    elapsedSpawnFrames = 1;
+}
+
 void gameActions(EntityV2* entity1, EntityV2* entity2) {
     if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
         entity1 -> performAction((char*)"remove_bullet");
