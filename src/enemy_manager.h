@@ -7,7 +7,9 @@ class EnemyManager {
     public:
         EnemyManager() {}
 
-        static void createEnemy(Shader* shader, float position_x, float position_y) {
+        static inline Shader* shader = nullptr;
+
+        static void createEnemy(float position_x, float position_y) {
             Enemy* newEnemy = new Enemy(shader, 0.0f, 0.0f, 50.0f, 50.0f);
 
             newEnemy->x = position_x;
@@ -20,9 +22,9 @@ class EnemyManager {
             ++enemyCount;
         }
 
-        static void createMulitipleEnemies(Shader* shader, float position_x, float position_y, int amount) {
+        static void createMulitipleEnemies(float position_x, float position_y, int amount) {
             for(int i = 0; i < amount; ++i) {
-                createEnemy(shader, position_x + (i * 80.0f), position_y);
+                createEnemy(position_x + (i * 80.0f), position_y);
             }
         }
 

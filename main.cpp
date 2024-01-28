@@ -137,6 +137,7 @@ int main() {
     Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
 
     BulletManager::bulletShader = &bulletShader;
+    EnemyManager::shader = &playerShader;
 
     UpdateSystem updateSystem;
     RenderSystem renderSystem;
@@ -150,7 +151,7 @@ int main() {
     player.active = true;
     entityManager.addEntity(&player);
 
-    EnemyManager::createMulitipleEnemies(&playerShader, 0.0f, enemyStartingPositionY, 10);
+    EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
 
     Button playButton(&menuShader, (char*)"src\\assets\\play.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
     playButton.updatePosition(400.0f - (playButton.width / 2), 300.0f - (playButton.height / 2));
@@ -209,7 +210,7 @@ int main() {
 
                 std::cout << "current Level: " << currentLevel << std::endl;
                 
-                EnemyManager::createMulitipleEnemies(&playerShader, 0.0f, enemyStartingPositionY, 10);
+                EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
                 EnemyManager::reduceMaxShootBuffer();
 
                 elapsedSpawnFrames = 0;
