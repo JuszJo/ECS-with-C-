@@ -28,6 +28,14 @@ class EnemyManager {
             }
         }
 
+        static void removeAllEnemies() {
+            for(int i = 0; i < entityManager.entity_list.size(); ++i) {
+                if(entityManager.entity_list[i] -> name == (char*)"enemy") {
+                    entityManager.entity_list[i] -> active = false;
+                }
+            }
+        }
+
         static void reduceMaxShootBuffer() {
             for(int i = 0; i < entityManager.entity_list.size(); ++i) {
                 if(entityManager.entity_list[i]->active && entityManager.entity_list[i]->name == (char*)"enemy") {

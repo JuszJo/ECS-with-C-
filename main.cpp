@@ -98,6 +98,18 @@ EntityManager entityManager;
 #include "src/bullet_manager.h"
 #include "src/enemy_manager.h"
 
+void nextLevel() {
+    ++currentLevel;
+    ++currentWave;
+
+    std::cout << "current Level: " << currentLevel << std::endl;
+    
+    EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
+    EnemyManager::reduceMaxShootBuffer();
+
+    elapsedSpawnFrames = 0;
+}
+
 Camera camera;
 
 
@@ -198,23 +210,10 @@ int main() {
             renderSystem.render(projection, view);
         }
 
-        entityManager.removeInactive();
-
         if(enemyCount == 0) {
-            // std::cout << "Enemy Count: " << enemyCount << std::endl;
             std::cout << "Enemy will spawn in: " << spawnBuffer - elapsedSpawnFrames << std::endl;
-            // std::cout << "spawn elapsed frames: " << elapsedSpawnFrames << std::endl;
-            if(elapsedSpawnFrames % spawnBuffer == 0) {
-                ++currentLevel;
-                ++currentWave;
 
-                std::cout << "current Level: " << currentLevel << std::endl;
-                
-                EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
-                EnemyManager::reduceMaxShootBuffer();
-
-                elapsedSpawnFrames = 0;
-            }
+            if(elapsedSpawnFrames % spawnBuffer == 0) nextLevel();
 
             ++elapsedSpawnFrames;
         }
@@ -229,6 +228,8 @@ int main() {
 
             ++elapsedGameOverFrames;
         }
+
+        entityManager.removeInactive();
 
         // std::cout << "active bullets: " << activeBullets << std::endl;
         // testEvents();
