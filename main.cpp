@@ -48,11 +48,12 @@ int enemyCount = 0;
 int spawnBuffer = 100;
 int elapsedSpawnFrames = 1;
 
-void startAgain() {
+void resetGame() {
     gameStart = false;
     gameOver = false;
     gameOverBuffer = 100;
-    elapsedGameOverFrames = 1;
+    // elapsedGameOverFrames = 1;
+    elapsedGameOverFrames = 0;
 
     // LEVEL SETTINGS
     currentLevel = 1;
@@ -221,9 +222,15 @@ int main() {
         if(gameOver) {
             std::cout << "time to game closing: " << gameOverBuffer - elapsedGameOverFrames << std::endl;
             if(elapsedGameOverFrames % gameOverBuffer == 0) {
-                glfwSetWindowShouldClose(window, GL_TRUE);
+                resetGame();
 
-                elapsedGameOverFrames = 1;
+                EnemyManager::removeAllEnemies();
+                BulletManager::removeAllBullets();
+                player.resetEntity();
+
+                EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
+
+                entityManager.addEntity(&player);
             }
 
             ++elapsedGameOverFrames;

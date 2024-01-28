@@ -41,6 +41,14 @@ class BulletManager {
                 ++activeBullets;
             }
         }
+
+        static void removeAllBullets() {
+            for(int i = 0; i < entityManager.entity_list.size(); ++i) {
+                if(entityManager.entity_list[i] -> name == (char*)"bullet") {
+                    entityManager.entity_list[i] -> active = false;
+                }
+            }
+        }
 };
 
 float BulletManager::width = 10.0f;

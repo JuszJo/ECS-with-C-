@@ -158,11 +158,12 @@ class PlayerV2: public EntityV2 {
         }
 
         void resetEntity() {
-            x = 0.0f;
-            y = 0.0f;
+            resetModel();
+            setPosition(300.0f, 0.0f);
+
+            active = true;
             
             speed = glm::vec3(0.0f, 0.0f, 0.0f);
-
             acceleration = 5.0f;
 
             currentState = IDLE;
@@ -171,8 +172,6 @@ class PlayerV2: public EntityV2 {
             elapsed = 1;
 
             canShoot = true;
-
-            resetModel();
         }
 };
 
