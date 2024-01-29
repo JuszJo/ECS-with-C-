@@ -162,7 +162,7 @@ class PlayerV2: public EntityV2 {
 
         void resetEntity() {
             resetModel();
-            setPosition(400.0f - width / 2, 0.0f);
+            setPosition(400.0f - width / 2, 10.0f);
 
             active = true;
             

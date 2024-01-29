@@ -33,7 +33,7 @@ int activeBullets = 0;
 int maxActiveBullets = 30;
 
 // ENEMY SETTINGS
-float enemyStartingPositionY = 500.0f;
+float enemyStartingPositionY = 530.0f;
 int enemyCount = 0;
 int spawnBuffer = 100;
 int elapsedSpawnFrames = 1;
@@ -62,7 +62,7 @@ void resetGame() {
     maxActiveBullets = 30;
 
     // ENEMY SETTINGS
-    enemyStartingPositionY = 500.0f;
+    enemyStartingPositionY = 530.0f;
     enemyCount = 0;
     spawnBuffer = 100;
     elapsedSpawnFrames = 1;
@@ -159,7 +159,7 @@ int main() {
 
     PlayerV2 player(&playerShader, 0.0f, 0.0f, 40.0f, 40.0f);
     player.active = true;
-    player.setPosition(400.0f - player.width / 2, 0.0f);
+    player.setPosition(400.0f - player.width / 2, 10.0f);
     entityManager.addEntity(&player);
 
     EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
