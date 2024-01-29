@@ -20,6 +20,7 @@ double cursor_position_x, cursor_position_y;
 // GAME SETTINGS
 bool gameStart = false;
 bool gameOver = false;
+bool pause = false;
 int gameOverBuffer = 100;
 int elapsedGameOverFrames = 1;
 
@@ -36,6 +37,14 @@ float enemyStartingPositionY = 500.0f;
 int enemyCount = 0;
 int spawnBuffer = 100;
 int elapsedSpawnFrames = 1;
+
+void pauseGame() {
+    pause = true;
+}
+
+void resumeGame() {
+    pause = false;
+}
 
 void resetGame() {
     gameStart = false;
@@ -156,8 +165,11 @@ int main() {
 
     Button playButton(&menuShader, (char*)"src\\assets\\play.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
     playButton.updatePosition(400.0f - (playButton.width / 2), 300.0f - (playButton.height / 2));
-
     Menu mainMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
+
+    Button resumeButton(&menuShader, (char*)"src\\assets\\resume.png", 0.0f, 0.0f, 100.0f, 50.0f, resumeGame);
+    resumeButton.updatePosition(400.0f - (resumeButton.width / 2), 300.0f - (resumeButton.height / 2));
+    Menu playerMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
 
     glm::mat4 projection = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
@@ -185,13 +197,21 @@ int main() {
             playButton.render(projection);
         }
         else {
-            inputSystem.processInput(window);
-            inputSystem.listen();
+            if(pause) {
+                playerMenu.render(projection);
+                resumeButton.checkMousePress(window);
+                resumeButton.update();
+                resumeButton.render(projection);
+            }
+            else {
+                inputSystem.processInput(window);
+                inputSystem.listen();
 
-            updateSystem.update();
-            collisionSystem.wallCollision();
-            collisionSystem.checkCollision();
-            renderSystem.render(projection, view);
+                updateSystem.update();
+                collisionSystem.wallCollision();
+                collisionSystem.checkCollision();
+                renderSystem.render(projection, view);
+            }
         }
 
         if(enemyCount == 0) {

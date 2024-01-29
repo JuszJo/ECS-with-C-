@@ -74,6 +74,9 @@ class PlayerV2: public EntityV2 {
                 // printf("d\n");
                 currentState = RIGHT;
             }
+            if(keys -> p) {
+                pauseGame();
+            }
             if(keys -> space) {
                 if(canShoot) {
                     BulletManager::createBullet(shader, (x + (width / 2)) - (BulletManager::width / 2), y + height + 2.0f, "blue");
