@@ -13,6 +13,7 @@ class KeyInput {
             bool d = false;
             bool f = false;
             bool p = false;
+            bool esc = false;
             bool space = false;
         };
 
@@ -38,6 +39,8 @@ class KeyInput {
 
             if(glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) key.p = true;
             if(glfwGetKey(window, GLFW_KEY_P) == GLFW_RELEASE) key.p = false;
+            if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) key.esc = true;
+            if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE) key.esc = false;
 
             if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) key.space = true;
             if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_RELEASE) key.space = false;   

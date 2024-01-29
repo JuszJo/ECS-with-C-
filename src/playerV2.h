@@ -74,7 +74,7 @@ class PlayerV2: public EntityV2 {
                 // printf("d\n");
                 currentState = RIGHT;
             }
-            if(keys -> p) {
+            if(keys -> p || keys -> esc) {
                 pauseGame();
             }
             if(keys -> space) {
