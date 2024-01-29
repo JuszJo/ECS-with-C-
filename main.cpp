@@ -13,17 +13,6 @@
 #include "src/entityV2.h"
 #include "src/entity_manager.h"
 
-// EntityManager entityManager;
-
-// TODO: Add random enemy random shot
-
-struct Camera {
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    float cameraSpeed = 2.0f;
-};
-
 // WINDOW SETTINGS
 int display_w, display_h;
 double cursor_position_x, cursor_position_y;
@@ -82,6 +71,15 @@ void gameActions(EntityV2* entity1, EntityV2* entity2) {
     }
 }
 
+struct Camera {
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    float cameraSpeed = 2.0f;
+};
+
+Camera camera;
+
 EntityManager entityManager;
 
 #include "src/systems/render_system.h"
@@ -109,13 +107,6 @@ void nextLevel() {
     EnemyManager::reduceMaxShootBuffer();
 
     elapsedSpawnFrames = 0;
-}
-
-Camera camera;
-
-
-void test(EntityV2* pointer) {
-    std::cout << pointer->active << std::endl;
 }
 
 void start_game() {
@@ -157,9 +148,6 @@ int main() {
     InputSystem inputSystem;
     CollisionSystem collisionSystem;
 
-    /* PlayerV2* player = new PlayerV2(&testShader, 0.0f, 0.0f, 40.0f, 40.0f, currentIndex);
-    player -> active = true;
-    addEntity(player); */
     PlayerV2 player(&playerShader, 0.0f, 0.0f, 40.0f, 40.0f);
     player.active = true;
     entityManager.addEntity(&player);
@@ -190,11 +178,6 @@ int main() {
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
 
-        /* if(glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-            BulletManager::createBullet(&testShader, 300.0f, 300.0f);
-        } */
-
-        // std::cout << size << std::endl;
         if(!gameStart) {
             mainMenu.render(projection);
             playButton.checkMousePress(window);
