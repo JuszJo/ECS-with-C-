@@ -159,6 +159,7 @@ int main() {
 
     PlayerV2 player(&playerShader, 0.0f, 0.0f, 40.0f, 40.0f);
     player.active = true;
+    player.setPosition(400.0f - player.width / 2, 0.0f);
     entityManager.addEntity(&player);
 
     EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
@@ -170,6 +171,37 @@ int main() {
     Button resumeButton(&menuShader, (char*)"src\\assets\\resume.png", 0.0f, 0.0f, 100.0f, 50.0f, resumeGame);
     resumeButton.updatePosition(400.0f - (resumeButton.width / 2), 300.0f - (resumeButton.height / 2));
     Menu playerMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
+
+    unsigned int TBO;
+
+    int texture_width, texture_height, nChannels;
+
+    stbi_uc* imageData = stbi_load((char*)"src\\assets\\bgmain2.png", &texture_width, &texture_height, &nChannels, 0);
+
+    if(!imageData) {
+        const char* reason = stbi_failure_reason();
+
+        std::cout << reason << std::endl;
+    }
+
+    glGenTextures(1, &TBO);
+    glBindTexture(GL_TEXTURE_2D, TBO);
+
+    if(nChannels > 3) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture_width, texture_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+    }
+    else {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture_width, texture_height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+    }
+
+    glGenerateMipmap(GL_TEXTURE_2D);
+
+    stbi_image_free(imageData);
+
+    unsigned int FBO;
+    glGenFramebuffers(1, &FBO);
+    glBindFramebuffer(GL_READ_FRAMEBUFFER, FBO);
+    glFramebufferTexture2D(GL_READ_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, TBO, 0);
 
     glm::mat4 projection = glm::mat4(1.0f);
     glm::mat4 view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);
@@ -186,6 +218,8 @@ int main() {
         glfwPollEvents();
         glClearColor(0.45f, 0.55f, 0.60f, 1.00f);
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        glBlitFramebuffer(0, 0, 800.0f, 600.0f, 0, 0, 800.0f, 600.0f, GL_COLOR_BUFFER_BIT, GL_NEAREST);
 
         projection = glm::ortho(0.0f, (float)display_w, 0.0f, (float)display_h, -10.0f, 10.0f);
         view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraFaceDirection, camera.cameraUp);

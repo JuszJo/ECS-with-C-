@@ -19,7 +19,7 @@ class BulletManager {
 
                 if(bullet_color == "blue") {
                     newBullet->color[0] = 0.0f;
-                    newBullet->color[1] = 0.3f;
+                    newBullet->color[1] = 0.5f;
                     newBullet->color[2] = 1.0f;
                 }
                 else {
