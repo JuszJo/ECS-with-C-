@@ -106,6 +106,10 @@ EntityManager entityManager;
 #include "src/bullet_manager.h"
 #include "src/enemy_manager.h"
 
+void start_game() {
+    gameStart = true;
+}
+
 void nextLevel() {
     ++currentLevel;
     ++currentWave;
@@ -116,10 +120,6 @@ void nextLevel() {
     EnemyManager::reduceMaxShootBuffer();
 
     elapsedSpawnFrames = 0;
-}
-
-void start_game() {
-    gameStart = true;
 }
 
 int main() {

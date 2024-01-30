@@ -20,6 +20,7 @@ class Enemy: public EntityV2 {
 
         std::random_device rd;
         int maxShootBuffer = 300;
+        int minShootBuffer = 50;
 
         Enemy() {};
 
@@ -102,7 +103,7 @@ class Enemy: public EntityV2 {
 
                 elapsed = 0;
 
-                if(maxShootBuffer < 100) maxShootBuffer = 100;
+                if(maxShootBuffer < minShootBuffer) maxShootBuffer = minShootBuffer;
 
                 int check = random(10, maxShootBuffer);
 
