@@ -18,25 +18,25 @@ int display_w, display_h;
 double cursor_position_x, cursor_position_y;
 
 // GAME SETTINGS
-bool gameStart = false;
-bool gameOver = false;
-bool pause = false;
-int gameOverBuffer = 100;
-int elapsedGameOverFrames = 1;
+bool gameStart;
+bool gameOver;
+bool pause;
+int gameOverBuffer;
+int elapsedGameOverFrames;
 
 // LEVEL SETTINGS
-int currentLevel = 1;
-int currentWave = 1;
+int currentLevel;
+int currentWave;
 
 // BULLETS SETTINGS
-int activeBullets = 0;
-int maxActiveBullets = 30;
+int activeBullets;
+int maxActiveBullets;
 
 // ENEMY SETTINGS
-float enemyStartingPositionY = 530.0f;
-int enemyCount = 0;
-int spawnBuffer = 100;
-int elapsedSpawnFrames = 1;
+float enemyStartingPositionY;
+int enemyCount;
+int spawnBuffer;
+int elapsedSpawnFrames;
 
 void pauseGame() {
     pause = true;
@@ -46,12 +46,13 @@ void resumeGame() {
     pause = false;
 }
 
-void resetGame() {
+void initGameSettings() {
+    // GAME SETTINGS
     gameStart = false;
     gameOver = false;
+    pause = false;
     gameOverBuffer = 100;
-    // elapsedGameOverFrames = 1;
-    elapsedGameOverFrames = 0;
+    elapsedGameOverFrames = 1;
 
     // LEVEL SETTINGS
     currentLevel = 1;
@@ -65,6 +66,23 @@ void resetGame() {
     enemyStartingPositionY = 530.0f;
     enemyCount = 0;
     spawnBuffer = 100;
+    elapsedSpawnFrames = 1;
+}
+
+void resetGame() {
+    gameStart = false;
+    gameOver = false;
+
+    elapsedGameOverFrames = 0;
+
+    currentLevel = 1;
+    currentWave = 1;
+
+    // BULLETS SETTINGS
+    activeBullets = 0;
+
+    // ENEMY SETTINGS
+    enemyCount = 0;
     elapsedSpawnFrames = 1;
 }
 
@@ -143,6 +161,8 @@ int main() {
     // Shader bgShader("shaders/background/bgVertexShader.glsl", "shaders/background/bgFragmentShader.glsl");
     // Shader cShader("shaders/collision/collisionVertexShader.glsl", "shaders/collision/collisionFragmentShader.glsl");
     // Shader menuShader("shaders/menu/menuVertexShader.glsl", "shaders/menu/menuFragmentShader.glsl");
+
+    initGameSettings();
 
     Shader playerShader("shaders/player/vertShader.glsl", "shaders/player/fragShader.glsl");
     Shader bulletShader("shaders/bullet/vertShader.glsl", "shaders/bullet/fragShader.glsl");
