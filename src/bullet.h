@@ -57,17 +57,6 @@ class Bullet: public EntityV2 {
             model = glm::translate(model, glm::vec3(x, y, 0.0f));
         }
 
-        // void testCollision() {
-        //     for(int i = 0; i < size; ++i) {
-        //         EntityV2* currentEntity = entityList[i];
-        //         if(currentEntity != this) {
-        //             if(didCollide(*this, *currentEntity)) {
-        //                 std::cout << "collided with" << currentEntity -> name << std::endl;
-        //             }
-        //         }
-        //     }
-        // }
-
         void removeBullet() {
             active = false;
             --activeBullets;
