@@ -13,7 +13,7 @@
 #include "src/entityV2.h"
 #include "src/entity_manager.h"
 
-// TODO: Add More Things
+// TODO: Add Explosions
 
 // WINDOW SETTINGS
 int display_w, display_h;
