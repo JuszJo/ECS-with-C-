@@ -101,7 +101,7 @@ void delayTillNextLevel() {
     ++EnemyManager::elapsedSpawnFrames;
 }
 
-void resetGame() {
+void resetGameSettings() {
     gameStart = false;
     gameOver = false;
 
@@ -111,8 +111,24 @@ void resetGame() {
     currentWave = 1;
 
     BulletManager::resetSettings();
-    
+
     EnemyManager::resetSettings();
+}
+
+void delayTillGameReset(PlayerV2* player) {
+    std::cout << "time to game closing: " << gameOverBuffer - elapsedGameOverFrames << std::endl;
+    if(elapsedGameOverFrames % gameOverBuffer == 0) {
+        resetGameSettings();
+        player -> resetEntity();
+
+        EnemyManager::removeAllEnemies();
+        BulletManager::removeAllBullets();
+
+        entityManager.addEntity(player);
+        EnemyManager::createMulitipleEnemies(0.0f, EnemyManager::enemyStartingPositionY, 10);
+    }
+
+    ++elapsedGameOverFrames;
 }
 
 int main() {
@@ -245,22 +261,7 @@ int main() {
 
         if(EnemyManager::enemyCount == 0) delayTillNextLevel();
 
-        if(gameOver) {
-            std::cout << "time to game closing: " << gameOverBuffer - elapsedGameOverFrames << std::endl;
-            if(elapsedGameOverFrames % gameOverBuffer == 0) {
-                resetGame();
-
-                EnemyManager::removeAllEnemies();
-                BulletManager::removeAllBullets();
-                player.resetEntity();
-
-                EnemyManager::createMulitipleEnemies(0.0f, EnemyManager::enemyStartingPositionY, 10);
-
-                entityManager.addEntity(&player);
-            }
-
-            ++elapsedGameOverFrames;
-        }
+        if(gameOver) delayTillGameReset(&player);
 
         entityManager.removeInactive();
 
