@@ -49,7 +49,6 @@ void initGameSettings() {
     // LEVEL SETTINGS
     currentLevel = 1;
     currentWave = 1;
-
 }
 
 struct Camera {
@@ -92,6 +91,14 @@ void nextLevel() {
     EnemyManager::reduceMaxShootBuffer();
 
     EnemyManager::elapsedSpawnFrames = 0;
+}
+
+void delayTillNextLevel() {
+    std::cout << "Enemy will spawn in: " << EnemyManager::spawnBuffer - EnemyManager::elapsedSpawnFrames << std::endl;
+
+    if(EnemyManager::elapsedSpawnFrames % EnemyManager::spawnBuffer == 0) nextLevel();
+
+    ++EnemyManager::elapsedSpawnFrames;
 }
 
 void resetGame() {
@@ -236,13 +243,7 @@ int main() {
             }
         }
 
-        if(EnemyManager::enemyCount == 0) {
-            std::cout << "Enemy will spawn in: " << EnemyManager::spawnBuffer - EnemyManager::elapsedSpawnFrames << std::endl;
-
-            if(EnemyManager::elapsedSpawnFrames % EnemyManager::spawnBuffer == 0) nextLevel();
-
-            ++EnemyManager::elapsedSpawnFrames;
-        }
+        if(EnemyManager::enemyCount == 0) delayTillNextLevel();
 
         if(gameOver) {
             std::cout << "time to game closing: " << gameOverBuffer - elapsedGameOverFrames << std::endl;
