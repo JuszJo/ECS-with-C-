@@ -57,14 +57,9 @@ class Bullet: public EntityV2 {
             model = glm::translate(model, glm::vec3(x, y, 0.0f));
         }
 
-        void removeBullet() {
-            active = false;
-            --activeBullets;
-        }
-
         void performAction(char* action) override {
             if(action == (char*)"remove_bullet") {
-                removeBullet();
+                deActivate();
             }
         }
 
@@ -73,15 +68,15 @@ class Bullet: public EntityV2 {
             applySpeed();
             applyPosition();
 
-            if(x + width > 800.0f) {
-                removeBullet();
-            }
-            if(y + height > 600.0f) {
-                removeBullet();
-            }
-            if(y < 0.0f) {
-                removeBullet();
-            }
+            // if(x + width > 800.0f) {
+            //     deActivate();
+            // }
+            // if(y + height > 600.0f) {
+            //     deActivate();
+            // }
+            // if(y < 0.0f) {
+            //     deActivate();
+            // }
 
             // std::cout << "bullet isActive: " << active << std::endl;
         }

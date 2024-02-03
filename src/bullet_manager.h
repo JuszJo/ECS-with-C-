@@ -8,8 +8,14 @@ class BulletManager {
         static inline Shader* bulletShader = nullptr;
         static float width;
         static float height;
+        static inline int activeBullets = 0;
+        static inline int maxActiveBullets = 30;
 
         BulletManager() {}
+
+        static void resetSettings() {
+            activeBullets = 0;
+        }
 
         static void createBullet(Shader* shader, float position_x, float position_y, const char* bullet_color, bool reverseDirection = false) {
             // std::cout << "active bullets: " << activeBullets << std::endl;
@@ -82,6 +88,10 @@ class BulletManager {
                     entityManager.entity_list[i] -> active = false;
                 }
             }
+        }
+        
+        static void reduceBulletCount() {
+            --activeBullets;
         }
 };
 

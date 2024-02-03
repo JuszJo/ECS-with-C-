@@ -26,11 +26,13 @@ class CollisionSystem {
             if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
                 entity1 -> performAction((char*)"remove_bullet");
                 entity2 -> performAction((char*)"despawn");
+                BulletManager::reduceBulletCount();
                 EnemyManager::reduceEnemyCount();
             }
             if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
                 entity1 -> performAction((char*)"remove_bullet");
                 entity2 -> performAction((char*)"despawn");
+                BulletManager::reduceBulletCount();
             }
         }
 
@@ -57,6 +59,16 @@ class CollisionSystem {
                     }
                     if(entityManager.entity_list[i]->x + entityManager.entity_list[i]->width > 800.0f) {
                         entityManager.entity_list[i]->setPosition(800.0f - entityManager.entity_list[i]->width, entityManager.entity_list[i]->y);
+                    }
+                    if(entityManager.entity_list[i] -> name == (char*)"bullet") {
+                        if(entityManager.entity_list[i] -> y + entityManager.entity_list[i] -> height > 600.0f) {
+                            entityManager.entity_list[i] -> deActivate();
+                            BulletManager::reduceBulletCount();
+                        }
+                        if(entityManager.entity_list[i] -> y < 0.0f) {
+                            entityManager.entity_list[i] -> deActivate();
+                            BulletManager::reduceBulletCount();
+                        }
                     }
                 }
             }

@@ -30,16 +30,6 @@ int elapsedGameOverFrames;
 int currentLevel;
 int currentWave;
 
-// BULLETS SETTINGS
-int activeBullets;
-int maxActiveBullets;
-
-// ENEMY SETTINGS
-/* float enemyStartingPositionY;
-int enemyCount;
-int spawnBuffer;
-int elapsedSpawnFrames; */
-
 void pauseGame() {
     pause = true;
 }
@@ -60,28 +50,7 @@ void initGameSettings() {
     currentLevel = 1;
     currentWave = 1;
 
-    // BULLETS SETTINGS
-    activeBullets = 0;
-    maxActiveBullets = 30;
-
-    // ENEMY SETTINGS
-    // enemyStartingPositionY = 530.0f;
-    // enemyCount = 0;
-    // spawnBuffer = 100;
-    // elapsedSpawnFrames = 1;
 }
-
-/* void gameActions(EntityV2* entity1, EntityV2* entity2) {
-    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
-        entity1 -> performAction((char*)"remove_bullet");
-        entity2 -> performAction((char*)"despawn");
-        // addEvent(EVENTS::ENEMY_DESPAWN);
-    }
-    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
-        entity1 -> performAction((char*)"remove_bullet");
-        entity2 -> performAction((char*)"despawn");
-    }
-} */
 
 struct Camera {
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
@@ -134,13 +103,9 @@ void resetGame() {
     currentLevel = 1;
     currentWave = 1;
 
-    // BULLETS SETTINGS
-    activeBullets = 0;
+    BulletManager::resetSettings();
     
     EnemyManager::resetSettings();
-    // ENEMY SETTINGS
-    // enemyCount = 0;
-    // elapsedSpawnFrames = 1;
 }
 
 int main() {

@@ -37,6 +37,10 @@ class EntityV2 {
             printf("LOL\n");
         };
 
+        virtual void deActivate() {
+            active = false;
+        }
+
         void updatePosition(float newX, float newY) {
             x = newX;
             y = newY;
