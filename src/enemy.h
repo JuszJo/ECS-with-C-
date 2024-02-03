@@ -70,7 +70,6 @@ class Enemy: public EntityV2 {
 
         void despawn() {
             active = false;
-            --enemyCount;
         }
 
         void setMaxShootBuffer(int amount) {

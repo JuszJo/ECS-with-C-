@@ -9,6 +9,16 @@ class EnemyManager {
 
         static inline Shader* shader = nullptr;
 
+        static inline float enemyStartingPositionY = 530.0f;
+        static inline int enemyCount = 0;
+        static inline int spawnBuffer = 100;
+        static inline int elapsedSpawnFrames = 1;
+
+        static void resetSettings() {
+            enemyCount = 0;
+            elapsedSpawnFrames = 1;
+        }
+
         static void createEnemy(float position_x, float position_y) {
             Enemy* newEnemy = new Enemy(shader, 0.0f, 0.0f, 50.0f, 50.0f);
 
@@ -42,6 +52,10 @@ class EnemyManager {
                     entityManager.entity_list[i]->performAction((char*)"reduce_max_shoot_buffer");
                 }
             }
+        }
+
+        static void reduceEnemyCount() {
+            --enemyCount;
         }
 };
 

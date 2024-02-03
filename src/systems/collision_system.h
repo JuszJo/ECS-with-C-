@@ -22,6 +22,18 @@ class CollisionSystem {
             }
         }
 
+        void handleCollision(EntityV2* entity1, EntityV2* entity2) {
+            if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
+                entity1 -> performAction((char*)"remove_bullet");
+                entity2 -> performAction((char*)"despawn");
+                EnemyManager::reduceEnemyCount();
+            }
+            if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
+                entity1 -> performAction((char*)"remove_bullet");
+                entity2 -> performAction((char*)"despawn");
+            }
+        }
+
         void checkCollision() {
             for(int i = 0; i < entityManager.entity_list.size(); ++i) {
                 for(int j = 0; j < entityManager.entity_list.size(); ++j) {
@@ -29,7 +41,7 @@ class CollisionSystem {
                         if(entityManager.entity_list[i] != entityManager.entity_list[j]) {
                             if(didCollide(*entityManager.entity_list[i], *entityManager.entity_list[j])) {
                                 std::cout << entityManager.entity_list[i]->name << " colliding with " << entityManager.entity_list[j]->name << std::endl;
-                                gameActions(entityManager.entity_list[i], entityManager.entity_list[j]);
+                                handleCollision(entityManager.entity_list[i], entityManager.entity_list[j]);
                             }
                         }
                     }

@@ -35,10 +35,10 @@ int activeBullets;
 int maxActiveBullets;
 
 // ENEMY SETTINGS
-float enemyStartingPositionY;
+/* float enemyStartingPositionY;
 int enemyCount;
 int spawnBuffer;
-int elapsedSpawnFrames;
+int elapsedSpawnFrames; */
 
 void pauseGame() {
     pause = true;
@@ -65,10 +65,64 @@ void initGameSettings() {
     maxActiveBullets = 30;
 
     // ENEMY SETTINGS
-    enemyStartingPositionY = 530.0f;
-    enemyCount = 0;
-    spawnBuffer = 100;
-    elapsedSpawnFrames = 1;
+    // enemyStartingPositionY = 530.0f;
+    // enemyCount = 0;
+    // spawnBuffer = 100;
+    // elapsedSpawnFrames = 1;
+}
+
+/* void gameActions(EntityV2* entity1, EntityV2* entity2) {
+    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
+        entity1 -> performAction((char*)"remove_bullet");
+        entity2 -> performAction((char*)"despawn");
+        // addEvent(EVENTS::ENEMY_DESPAWN);
+    }
+    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
+        entity1 -> performAction((char*)"remove_bullet");
+        entity2 -> performAction((char*)"despawn");
+    }
+} */
+
+struct Camera {
+    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
+    glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+    float cameraSpeed = 2.0f;
+};
+
+Camera camera;
+
+EntityManager entityManager;
+
+#include "src/playerV2.h"
+#include "src/enemy.h"
+#include "src/bullet.h"
+
+#include "src/button.h"
+#include "src/menu.h"
+
+#include "src/bullet_manager.h"
+#include "src/enemy_manager.h"
+
+#include "src/systems/render_system.h"
+#include "src/systems/update_system.h"
+#include "src/systems/input_system.h"
+#include "src/systems/collision_system.h"
+
+void start_game() {
+    gameStart = true;
+}
+
+void nextLevel() {
+    ++currentLevel;
+    ++currentWave;
+
+    std::cout << "current Level: " << currentLevel << std::endl;
+    
+    EnemyManager::createMulitipleEnemies(0.0f, EnemyManager::enemyStartingPositionY, 10);
+    EnemyManager::reduceMaxShootBuffer();
+
+    EnemyManager::elapsedSpawnFrames = 0;
 }
 
 void resetGame() {
@@ -82,64 +136,11 @@ void resetGame() {
 
     // BULLETS SETTINGS
     activeBullets = 0;
-
-    // ENEMY SETTINGS
-    enemyCount = 0;
-    elapsedSpawnFrames = 1;
-}
-
-void gameActions(EntityV2* entity1, EntityV2* entity2) {
-    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"enemy") {
-        entity1 -> performAction((char*)"remove_bullet");
-        entity2 -> performAction((char*)"despawn");
-        // addEvent(EVENTS::ENEMY_DESPAWN);
-    }
-    if(entity1 -> name == (char*)"bullet" && entity2 -> name == (char*)"player") {
-        entity1 -> performAction((char*)"remove_bullet");
-        entity2 -> performAction((char*)"despawn");
-    }
-}
-
-struct Camera {
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 1.0f);
-    glm::vec3 cameraFaceDirection = glm::vec3(0.0f, 0.0f, -1.0f);
-    glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-    float cameraSpeed = 2.0f;
-};
-
-Camera camera;
-
-EntityManager entityManager;
-
-#include "src/systems/render_system.h"
-#include "src/systems/update_system.h"
-#include "src/systems/input_system.h"
-#include "src/systems/collision_system.h"
-
-#include "src/playerV2.h"
-#include "src/enemy.h"
-#include "src/bullet.h"
-
-#include "src/button.h"
-#include "src/menu.h"
-
-#include "src/bullet_manager.h"
-#include "src/enemy_manager.h"
-
-void start_game() {
-    gameStart = true;
-}
-
-void nextLevel() {
-    ++currentLevel;
-    ++currentWave;
-
-    std::cout << "current Level: " << currentLevel << std::endl;
     
-    EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
-    EnemyManager::reduceMaxShootBuffer();
-
-    elapsedSpawnFrames = 0;
+    EnemyManager::resetSettings();
+    // ENEMY SETTINGS
+    // enemyCount = 0;
+    // elapsedSpawnFrames = 1;
 }
 
 int main() {
@@ -184,7 +185,7 @@ int main() {
     player.setPosition(400.0f - player.width / 2, 10.0f);
     entityManager.addEntity(&player);
 
-    EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
+    EnemyManager::createMulitipleEnemies(0.0f, EnemyManager::enemyStartingPositionY, 10);
 
     Button playButton(&menuShader, (char*)"src\\assets\\play.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
     playButton.updatePosition(400.0f - (playButton.width / 2), 300.0f - (playButton.height / 2));
@@ -270,12 +271,12 @@ int main() {
             }
         }
 
-        if(enemyCount == 0) {
-            std::cout << "Enemy will spawn in: " << spawnBuffer - elapsedSpawnFrames << std::endl;
+        if(EnemyManager::enemyCount == 0) {
+            std::cout << "Enemy will spawn in: " << EnemyManager::spawnBuffer - EnemyManager::elapsedSpawnFrames << std::endl;
 
-            if(elapsedSpawnFrames % spawnBuffer == 0) nextLevel();
+            if(EnemyManager::elapsedSpawnFrames % EnemyManager::spawnBuffer == 0) nextLevel();
 
-            ++elapsedSpawnFrames;
+            ++EnemyManager::elapsedSpawnFrames;
         }
 
         if(gameOver) {
@@ -287,7 +288,7 @@ int main() {
                 BulletManager::removeAllBullets();
                 player.resetEntity();
 
-                EnemyManager::createMulitipleEnemies(0.0f, enemyStartingPositionY, 10);
+                EnemyManager::createMulitipleEnemies(0.0f, EnemyManager::enemyStartingPositionY, 10);
 
                 entityManager.addEntity(&player);
             }
