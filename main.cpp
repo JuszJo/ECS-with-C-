@@ -14,6 +14,7 @@
 #include "src/entity_manager.h"
 
 // TODO: Add Explosions
+// TODO: Update
 
 // WINDOW SETTINGS
 int display_w, display_h;
