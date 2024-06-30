@@ -156,6 +156,8 @@ int main() {
 
     initGameSettings();
 
+    // TODO: FIX MEMORY LEAKS
+
     Shader playerShader("shaders/player/vertShader.glsl", "shaders/player/fragShader.glsl");
     Shader bulletShader("shaders/bullet/vertShader.glsl", "shaders/bullet/fragShader.glsl");
     Shader testShader("shaders/test/vertShader.glsl", "shaders/test/fragShader.glsl");
