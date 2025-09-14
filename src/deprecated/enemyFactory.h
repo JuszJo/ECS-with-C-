@@ -66,7 +66,7 @@ class EnemyFactory: public EntityV2 {
             cleanupBuffers();
 
             loadImage(texturePath, &TBO);
-            loadImage((char*)"src\\assets\\enemyrun.png", &runTBO);
+            loadImage((char*)"src/assets/enemyrun.png", &runTBO);
 
             // EnemyData enemy;
 

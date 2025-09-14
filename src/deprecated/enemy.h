@@ -86,11 +86,11 @@ class Enemy: public Entity {
             cleanupBuffers();
 
             loadImage(texturePath, &TBO);
-            loadImage((char*)"src\\assets\\playeridle.png", &TBO2);
-            loadImage((char*)"src\\assets\\player2.png", &TBO3);
-            loadImage((char*)"src\\assets\\playerup.png", &TBO4);
-            loadImage((char*)"src\\assets\\playerattack.png", &TBO5);
-            loadImage((char*)"src\\assets\\playerattack2.png", &TBO6);
+            loadImage((char*)"src/assets/playeridle.png", &TBO2);
+            loadImage((char*)"src/assets/player2.png", &TBO3);
+            loadImage((char*)"src/assets/playerup.png", &TBO4);
+            loadImage((char*)"src/assets/playerattack.png", &TBO5);
+            loadImage((char*)"src/assets/playerattack2.png", &TBO6);
 
             Animation newAnimation((char*)"idle", 11.0f, 4, 1, nullptr, false);
 

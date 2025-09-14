@@ -54,7 +54,7 @@ class Enemy: public EntityV2 {
 
             cleanupBuffers();
 
-            loadImage((char*)"src\\assets\\enemyship.png", &TBO);
+            loadImage((char*)"src/assets/enemyship.png", &TBO);
         }
 
         void applySpeed() {

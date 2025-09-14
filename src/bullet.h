@@ -43,7 +43,7 @@ class Bullet: public EntityV2 {
 
             cleanupBuffers();
 
-            loadImage((char*)"src\\assets\\laser.png", &TBO);
+            loadImage((char*)"src/assets/laser.png", &TBO);
         }
 
         void applySpeed() {

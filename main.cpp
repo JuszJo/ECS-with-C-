@@ -178,19 +178,19 @@ int main() {
 
     EnemyManager::createMulitipleEnemies(0.0f, EnemyManager::enemyStartingPositionY, 10);
 
-    Button playButton(&menuShader, (char*)"src\\assets\\play.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
+    Button playButton(&menuShader, (char*)"src/assets/play.png", 0.0f, 0.0f, 100.0f, 50.0f, start_game);
     playButton.updatePosition(400.0f - (playButton.width / 2), 300.0f - (playButton.height / 2));
-    Menu mainMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
+    Menu mainMenu(&menuShader, (char*)"src/assets/mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
 
-    Button resumeButton(&menuShader, (char*)"src\\assets\\resume.png", 0.0f, 0.0f, 100.0f, 50.0f, resumeGame);
+    Button resumeButton(&menuShader, (char*)"src/assets/resume.png", 0.0f, 0.0f, 100.0f, 50.0f, resumeGame);
     resumeButton.updatePosition(400.0f - (resumeButton.width / 2), 300.0f - (resumeButton.height / 2));
-    Menu playerMenu(&menuShader, (char*)"src\\assets\\mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
+    Menu playerMenu(&menuShader, (char*)"src/assets/mainmenu3.png", 0.0f, 0.0f, 800.0f, 600.0f);
 
     unsigned int TBO;
 
     int texture_width, texture_height, nChannels;
 
-    stbi_uc* imageData = stbi_load((char*)"src\\assets\\bgmain2.png", &texture_width, &texture_height, &nChannels, 0);
+    stbi_uc* imageData = stbi_load((char*)"src/assets/bgmain2.png", &texture_width, &texture_height, &nChannels, 0);
 
     if(!imageData) {
         const char* reason = stbi_failure_reason();

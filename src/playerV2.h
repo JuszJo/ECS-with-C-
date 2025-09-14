@@ -54,7 +54,7 @@ class PlayerV2: public EntityV2 {
 
             cleanupBuffers();
 
-            loadImage((char*)"src\\assets\\spaceship.png", &TBO);
+            loadImage((char*)"src/assets/spaceship.png", &TBO);
         }
 
         void listen(KeyInput::Keys* keys) override {
